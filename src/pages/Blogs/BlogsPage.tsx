@@ -1,25 +1,35 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { blogPosts } from "../../mocks/blogPosts";
+import type { BlogPostResponseDto } from "../../types/dto";
+import { blogPosts } from "../../mocks/blogPosts"; // 👈 импорт моков
 import Cofee from "../../assets/home/blog/coffes.png";
 import ButtonIcon from "../../assets/home/blog/Menu8.svg";
 
-const categories = [
-  { name: "About baristas", slug: "about-baristas" },
-  { name: "Café review", slug: "cafe-review" },
-  { name: "Coffee history", slug: "coffee-history" },
-  { name: "Best croissants", slug: "best-croissants" },
-];
-
 export default function BlogPage() {
+  const [posts, setPosts] = useState<BlogPostResponseDto[]>([]);
+
+  useEffect(() => {
+    // пока используем моки, не API
+    setPosts(blogPosts.content);
+
+    // если появится API — просто раскомментируй:
+    /*
+    api
+      .get("/blog?page=0&size=10")
+      .then((res) => setPosts(res.data.content))
+      .catch((err) => console.error("Ошибка при загрузке блогов:", err));
+    */
+  }, []);
+
   return (
-    <div className="bg-[#F9F8F5] rounded-[30px] sm:rounded-[30px] overflow-hidden">
+    <div className="bg-[#F9F8F5] rounded-[30px] overflow-hidden">
       {/* --- Hero banner --- */}
       <div className="relative w-full h-[220px] sm:h-[258px] overflow-hidden">
         <img
           src={Cofee}
           alt=""
-          loading="lazy"
           className="w-full h-full object-cover"
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
           <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl font-bold text-white uppercase tracking-wide text-center px-4">
@@ -37,13 +47,13 @@ export default function BlogPage() {
           </h2>
 
           <ul className="flex lg:block flex-wrap gap-3 sm:gap-4 text-sm sm:text-lg">
-            {categories.map((category) => (
-              <li key={category.slug}>
+            {["About baristas", "Café review", "Coffee history", "Best croissants"].map((cat) => (
+              <li key={cat}>
                 <Link
-                  to={`/blog/category/${category.slug}`}
-                  className="block px-4 p-2 lg:px-1 lg:py-1 bg-white lg:bg-transparent rounded-[30px] lg:rounded-[30px] border lg:border-0 font-bold hover:bg-[#C6B0E7] hover:text-black transition"
+                  to={`/blog/category/${cat.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="block px-4 p-2 lg:px-1 lg:py-1 bg-white lg:bg-transparent rounded-[30px] border lg:border-0 font-bold hover:bg-[#C6B0E7] hover:text-black transition"
                 >
-                  {category.name}
+                  {cat}
                 </Link>
               </li>
             ))}
@@ -52,22 +62,22 @@ export default function BlogPage() {
 
         {/* Blog list */}
         <section className="flex-1 flex flex-col gap-6">
-          {blogPosts.map((post) => (
+          {posts.map((post) => (
             <Link
               key={post.id}
-              to={`/blog/${post.id}`}
+              to={`/blog/${post.slug}`}
               className="flex flex-col sm:flex-row bg-[#F9F8F5] rounded-[30px] overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200"
             >
-              {/* Image слева на десктопе */}
+              {/* Image */}
               <div className="sm:basis-1/2 flex-shrink-0 h-[220px] sm:h-auto sm:max-h-[256px] overflow-hidden">
                 <img
-                  src={post.image}
-                  alt={post.title}
+                  src={post.images[0]?.imageUrl}
+                  alt={post.images[0]?.altText || post.title}
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>
 
-              {/* Content справа */}
+              {/* Content */}
               <div className="sm:basis-1/2 flex flex-col justify-between px-5 sm:px-6 py-5 sm:py-6 min-w-0">
                 <div>
                   <h3
@@ -78,17 +88,16 @@ export default function BlogPage() {
                   </h3>
 
                   <p className="text-sm sm:text-lg mb-6 line-clamp-3">
-                    {post.description}
+                    {post.excerpt}
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between text-xs sm:text-sm mt-auto">
-                  <span>{post.readTime} read</span>
+                <div className="flex justify-end mt-auto">
                   <button className="transition hover:opacity-80">
                     <img
                       src={ButtonIcon}
                       alt="Read article"
-                      className="w-[100px] sm:w-[133px] h-auto"
+                      className="w-[133px] sm:w-[133px] h-auto"
                     />
                   </button>
                 </div>

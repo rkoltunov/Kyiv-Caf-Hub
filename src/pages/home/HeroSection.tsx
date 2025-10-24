@@ -117,16 +117,16 @@ export const HeroSection: FC<HeroSectionProps> = ({
         <div className="relative flex items-center justify-center gap-3 text-sm w-full mt-4 flex-wrap">
           <span className="font-medium whitespace-nowrap">Popular filters:</span>
           <div className="flex flex-wrap gap-2">
-          <button onClick={() => handleFilterClick("Menu", "Sugar-free desserts")}>
+          <button onClick={() => handleFilterClick("MENU", "Sugar-free desserts")}>
             <img src={SugarFreeIcon} alt="Sugar Free" className="h-[37px]" />
           </button>
-          <button onClick={() => handleFilterClick("Vibe", "Quiet Zone")}>
+          <button onClick={() => handleFilterClick("VIBE", "Quiet Zone")}>
             <img src={QuietZoneIcon} alt="Quiet Zone" className="h-[37px]" />
           </button>
-          <button onClick={() => handleFilterClick("Menu", "Matcha")}>
+          <button onClick={() => handleFilterClick("MENU", "Matcha")}>
             <img src={MatchaIcon} alt="Matcha" className="h-[37px]" />
           </button>
-          <button onClick={() => handleFilterClick("Vibe", "Pet-friendly")}>
+          <button onClick={() => handleFilterClick("VIBE", "Pet-friendly")}>
             <img src={PetFriendlyIcon} alt="Pet Friendly" className="h-[37px]" />
           </button>
           </div>

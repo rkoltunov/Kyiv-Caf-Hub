@@ -6,6 +6,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi/Satoshi-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
 
 @font-face {
   font-family: 'Satoshi';
@@ -65,3 +72,9 @@
   }
 
 
+  .blog-content ul {
+    list-style-type: disc; /* точки */
+    margin-left: 1.5rem;   /* отступ слева */
+    padding-left: 0;
+  }
+  

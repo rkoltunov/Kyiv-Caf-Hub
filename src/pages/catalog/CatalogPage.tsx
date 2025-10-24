@@ -5,7 +5,9 @@ import FiltersSection from "../../components/Filters/FiltersSection";
 import Breadcrumbs from "../../pages/catalog/Breadcrumbs";
 import SearchBar from "../../pages/catalog/SearchBar";
 import CafesGrid from "../../pages/catalog/CafesGrid";
-import { popularCafes } from "../../mocks/popularCafes";
+import { cafes } from "../../mocks/cafes";
+
+
 
 const ITEMS_PER_PAGE = 8;
 
@@ -17,6 +19,8 @@ interface Cafe {
   image: string;
 }
 
+
+
 export default function CatalogPage() {
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({});
   const [query, setQuery] = useState("");
@@ -24,10 +28,18 @@ export default function CatalogPage() {
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const normalizedCafes: Cafe[] = useMemo(
-    () => popularCafes.map(cafe => ({ ...cafe, id: cafe.id.toString() })),
-    []
-  );
+
+  const normalizedCafes: Cafe[] = useMemo(() =>
+    cafes.map((cafe) => ({
+      id: cafe.id.toString(),
+      title: cafe.name,
+      description: cafe.description,
+      metro: cafe.tags.find(t => t.category === "METRO")?.name || "",
+      image: cafe.images && cafe.images.length > 0
+        ? cafe.images[0].imageUrl // берём первое изображение из массива
+        : "", // если нет фото
+    }))
+  , []);
 
   // 🧭 Чтение параметров из URL при загрузке
   useEffect(() => {
@@ -80,12 +92,12 @@ export default function CatalogPage() {
     Object.entries(selectedFilters).forEach(([filterName, options]) => {
       if (options.length) {
         filtered = filtered.filter(it => {
-          if (filterName === "Metro station") return options.includes(it.metro);
-          if (filterName === "Category") {
-            // пример: фильтр по matcha, sugar-free, pet-friendly
-            return options.some(opt => it.description.toLowerCase().includes(opt.toLowerCase()));
+          const cafeTags = cafes.find(c => c.id.toString() === it.id)?.tags || [];
+          if (filterName === "Metro station") {
+            return options.includes(it.metro);
           }
-          return true;
+          const tagNames = cafeTags.map(t => t.name);
+          return options.some(opt => tagNames.includes(opt));
         });
       }
     });
