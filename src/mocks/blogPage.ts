@@ -1,14 +1,6 @@
 import { blogPageBackendMock } from './blogPageBackendMock';
 
 import BlogImage2 from '../assets/home/blog/imageblog2.png'; 
-import Image1 from '../assets/home/blog/Image1.png'; 
-import Image2 from '../assets/home/blog/Image2.png'; 
-import Image3 from '../assets/home/blog/Image3.png'; 
-import Image4 from '../assets/home/blog/Image4.png'; 
-import Image5 from '../assets/home/blog/Image5.png'; 
-import Image6 from '../assets/home/blog/Image6.png'; 
-import Image7 from '../assets/home/blog/Image7.png'; 
-import Image8 from '../assets/home/blog/Image8.png'; 
 
 // ===============================
 // 📦 Типы для старого формата

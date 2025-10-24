@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import type { BlogPostResponseDto } from "../../types/dto";
 import { blogPosts } from "../../mocks/blogPosts"; // 👈 импорт моков
 import Cofee from "../../assets/home/blog/coffes.png";
-import ButtonIcon from "../../assets/home/blog/Menu8.svg";
+import ButtonIcon from "../../assets/home/blog/menu8.svg";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPostResponseDto[]>([]);

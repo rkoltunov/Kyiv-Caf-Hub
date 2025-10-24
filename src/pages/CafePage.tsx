@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchCafes } from "../mocks/cafes";
-import CafeMap from "../utils/CafeMap";
+import CafeMap from "../utils/cafeMap";
 import type { CafeResponseDto } from "../types/dto";
 import LocationIcon from "../assets/icons/location.svg";
 import ShareIcon from "../assets/icons/share.svg";

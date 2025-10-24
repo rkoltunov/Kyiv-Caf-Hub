@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { filterOptions } from "../../mocks/filterOptions";
-import FiltersSection from "../../components/Filters/FiltersSection";
+import FiltersSection from "../../components/filters/FiltersSection";
 import Breadcrumbs from "../../pages/catalog/Breadcrumbs";
 import SearchBar from "../../pages/catalog/SearchBar";
 import CafesGrid from "../../pages/catalog/CafesGrid";

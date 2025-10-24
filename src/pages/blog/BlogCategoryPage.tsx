@@ -2,7 +2,7 @@ import { useParams, NavLink, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { blogPosts } from "../../mocks/blogPosts";
 import Cofee from "../../assets/home/blog/coffes.png";
-import ButtonIcon from "../../assets/home/blog/Menu8.svg";
+import ButtonIcon from "../../assets/home/blog/menu8.svg";
 
 const categories = [
   { name: "About baristas", slug: "about-baristas" },

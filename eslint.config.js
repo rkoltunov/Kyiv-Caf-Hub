@@ -71,6 +71,15 @@ export default tseslint.config(
 
     // 2.6 – собственные правила проекта
     rules: {
+      'unicorn/filename-case': [
+        'error',
+        {
+          cases: {
+            pascalCase: true, // для компонентов
+            camelCase: true,  // для хелперов
+          },
+        },
+      ],
       'react/jsx-no-target-blank': 'off',
       // ── React ───────────────────────
       'react/react-in-jsx-scope': 'off',

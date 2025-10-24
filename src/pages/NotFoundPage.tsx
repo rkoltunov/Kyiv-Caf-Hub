@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Cup from "../assets/icons/hot.png";
-import Macaroon from "../assets/home/404/Macaroon.svg";
-import Macaroonbig from "../assets/home/404/Macaroonbig.svg";
+import Macaroon from "../assets/home/404/macaroon.svg";
+import Macaroonbig from "../assets/home/404/macaroonbig.svg";
 
 export default function NotFoundPage() {
   return (

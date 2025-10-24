@@ -8,9 +8,9 @@ import Photo6 from '../assets/home/card/image6.png';
 import Photo7 from '../assets/home/card/image7.png';
 import Photo8 from '../assets/home/card/image8.png';
 import Main from "../assets/home/cafepage/main.png";
-import Small1 from "../assets/home/cafepage/Small1.png";
-import Small2 from "../assets/home/cafepage/Small2.png";
-import Right from "../assets/home/cafepage/Right.png";
+import Small1 from "../assets/home/cafepage/small1.png";
+import Small2 from "../assets/home/cafepage/small2.png";
+import Right from "../assets/home/cafepage/right.png";
 
 
 // 👇 Моковые данные для разработки

@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom';
 
 // Иконки
 import SearchIcon from "../../assets/icons/search.svg";
-import SearchButtonIcon from '../../assets/home/Buttonhome.svg';
+import SearchButtonIcon from '../../assets/home/buttonhome.svg';
 import MicrophoneIcon from '../../assets/icons/mic.svg';
 import SugarFreeIcon from '../../assets/home/tag.svg';
-import QuietZoneIcon from '../../assets/home/Tag1.svg';
-import MatchaIcon from '../../assets/home/Tag2.svg';
-import PetFriendlyIcon from '../../assets/home/Tag3.svg';
-import Matcha from '../../assets/home/Matcha.png';
-import Doughnut from '../../assets/home/Doughnut.png';
-import Macaroons from '../../assets/home/Macaroons.png';
-import Card_polaroid2 from '../../assets/home/Card_polaroid2.png';
-import Card_polaroid1 from '../../assets/home/Card_polaroid1.png';
+import QuietZoneIcon from '../../assets/home/tag1.svg';
+import MatchaIcon from '../../assets/home/tag2.svg';
+import PetFriendlyIcon from '../../assets/home/tag3.svg';
+import Matcha from '../../assets/home/matcha.png';
+import Doughnut from '../../assets/home/doughnut.png';
+import Macaroons from '../../assets/home/macaroons.png';
+import Card_polaroid2 from '../../assets/home/card_polaroid2.png';
+import Card_polaroid1 from '../../assets/home/card_polaroid1.png';
 import cappuccino from '../../assets/home/cappuccino.png';
 
 type HeroSectionProps = {
