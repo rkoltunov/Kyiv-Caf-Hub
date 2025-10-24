@@ -2,14 +2,14 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/home/HomePage";
 import CatalogPage from "../pages/catalog/CatalogPage";
 import CafePage from "../pages/CafePage";
-import BlogsPage from "../pages/blogs/BlogsPage";
-import BlogPage from "../pages/blogs/BlogPage";
+import BlogsPage from "../pages/blog/BlogsPage";
+import BlogPage from "../pages/blog/BlogPage";
 import AboutPage from "../pages/AboutPage";
 import AdminLoginPage from "../pages/admin/AdminLoginPage";
 import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import { MainLayout } from "../components/layout/MainLayout";
-import BlogCategoryPage from "../pages/blogs/BlogCategoryPage";
+import BlogCategoryPage from "../pages/blog/BlogCategoryPage";
 import PrivateRoute from "../components/PrivateRoute";
 import AdminCafesPage from "../pages/admin/AdminCafesPage";
 
