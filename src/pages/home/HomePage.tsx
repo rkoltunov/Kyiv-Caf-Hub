@@ -1,6 +1,6 @@
 import type { FC} from 'react';
 import {useRef, useState } from 'react';
-import { Helmet } from 'react-helmet-async'; // Для SEO
+import { Helmet } from 'react-helmet'; // Для SEO
 
 // Импорты компонентов
 import { HeroSection } from '../../pages/home/HeroSection';

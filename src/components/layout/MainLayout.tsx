@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
+import  HelmetProvider  from 'react-helmet';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { ScrollToTopButton } from '../../components/ui/ScrollToTopButton';
