@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import ArrowUpIcon from "../../assets/icons/Activeblack.svg";
+import ArrowUpIcon from "../../assets/icons/activeblack.svg";
 
 type ScrollToTopProps = {
   showAfter?: number;
