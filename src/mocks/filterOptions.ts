@@ -7,8 +7,8 @@ export const filterOptions: Record<string, string[]> = {
     "Zoloti Vorota",
     "Teatralna",
   ],
-  Vibe: ["Work-friendly", "Kid-friendly", "Instagrammable", "With terrace", "Pet-friendly", "Cozy for meetings", "With music"],
-  Menu: ["Alternative milk", "Finest pastries", "Matcha", "Vegan desserts", "Sugar-free desserts"],
-  Amenities: ["Accessibility", "Power outlets", "Outdoor seating", "Restrooms", "Free Wi-Fi"],
-  Budget: ["$", "$$", "$$$"],
+  VIBE: ["Work-friendly", "Kid-friendly", "Instagrammable", "With terrace", "Pet-friendly", "Cozy for meetings", "With music"],
+  MENU: ["Alternative milk", "Finest pastries", "Matcha", "Vegan desserts", "Sugar-free desserts"],
+  ACCESSIBILITY: ["Accessibility", "Power outlets", "Outdoor seating", "Restrooms", "Free Wi-Fi"],
+  BUDGET: ["$", "$$", "$$$"],
 };

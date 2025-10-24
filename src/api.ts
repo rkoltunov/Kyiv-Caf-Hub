@@ -1,8 +1,17 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+import axios from "axios";
+import { useStore } from "./app/store";
 
-// пример запроса
-export async function getCafes() {
-  const response = await fetch(`${API_URL}/cafes`);
-  if (!response.ok) throw new Error("Ошибка при получении данных");
-  return await response.json();
-}
+const api = axios.create({
+  baseURL: "/api/",
+  withCredentials: true, // можно оставить, не мешает даже при localStorage-схеме
+});
+
+api.interceptors.request.use((config) => {
+  const token = useStore.getState().token; // читаем напрямую из стора
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export default api;

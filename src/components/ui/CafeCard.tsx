@@ -21,7 +21,7 @@ export const CafeCard: FC<CafeCardProps> = ({
   return (
     <Card className={`    flex flex-col overflow-hidden p-0 
     w-full max-w-[300px] sm:max-w-[320px]
-    bg-[#F9F8F5]  shadow-sm
+    bg-[#F9F8F5]  
     transition-transform hover:scale-[1.02]${className}`}>
       {/* Фото (кликабельно) */}
       <Link 

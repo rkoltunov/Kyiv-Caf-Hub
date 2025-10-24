@@ -5,7 +5,7 @@ export function useFilterState() {
   const [searchTerm, setSearchTerm] = useState("");
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     "Metro station": true,
-    "Red Line": true,
+    "Red Line (Sviatoshynsko—Brovarska)": true,
     "Blue Line": false,
     "Green Line": false,
   });

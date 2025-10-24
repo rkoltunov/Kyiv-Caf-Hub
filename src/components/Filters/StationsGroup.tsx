@@ -22,7 +22,7 @@ export const StationsGroup: React.FC<Props> = ({
 
   return (
     <div className="mb-2">
-      <button onClick={() => toggleSection(line)} className="flex justify-between items-center text-[#3D464D] w-full  font-semibold pt-4 pl-4">
+      <button onClick={() => toggleSection(line)} className="flex justify-between items-center text-[#3D464D] w-full  text-lg font-semibold pt-4 pl-4">
         <span>{line}</span>
         <img src={openSections[line] ? ChevronDownIcon : ChevronRightIcon} className="w-6 h-6" alt="" />
       </button>

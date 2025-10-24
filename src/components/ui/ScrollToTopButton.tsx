@@ -77,7 +77,7 @@ export const ScrollToTopButton = ({
       onClick={scrollToTop}
       aria-label="Scroll to top"
       className={`
-        fixed right-4
+        fixed right-[42px]
         w-12 h-12
         flex items-center justify-center
         bg-[#21262B] text-white

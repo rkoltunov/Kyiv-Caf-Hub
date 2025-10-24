@@ -1,14 +1,65 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { blogPage } from "../../mocks/blogPage";
+import { blogPage as mockPosts } from "../../mocks/blogPage";
 
 export default function BlogPostPage() {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<any>(null);
 
   useEffect(() => {
-    const found = blogPage.find((p) => p.id === Number(id)) || blogPage[0];
-    setPost(found);
+    // Имитация fetch с задержкой
+    setTimeout(() => {
+      // Берём пост из мока по id
+      const backendPost = mockPosts.find((p) => p.id === Number(id)) || mockPosts[0];
+
+      // Эмулируем бекенд: "content" как плоский HTML
+      const content = backendPost.places
+        .map(
+          (place) =>
+            `<h3>${place.title}</h3>${place.description}${place.verdict ? place.verdict : ""}`
+        )
+        .join("");
+
+      const images = backendPost.places.map((place) => ({
+        id: place.id,
+        imageUrl: place.image,
+        altText: place.title,
+      }));
+
+      // Парсим плоский content обратно в массив places
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(content, "text/html");
+      const sections = Array.from(doc.querySelectorAll("h3")).map((h3, i) => {
+        let el = h3.nextElementSibling;
+        const descEls: string[] = [];
+        let verdictHTML = "";
+      
+        while (el && el.tagName.toLowerCase() !== "h3") {
+          // если нашли verdict (например, содержит слово Verdict)
+          if (el.outerHTML.toLowerCase().includes("verdict")) {
+            verdictHTML = el.outerHTML;
+          } else {
+            descEls.push(el.outerHTML);
+          }
+          el = el.nextElementSibling;
+        }
+      
+        return {
+          id: i + 1,
+          title: h3.textContent,
+          description: descEls.join(""),
+          image: images[i]?.imageUrl || null,
+          verdict: verdictHTML,
+        };
+      });
+
+      setPost({
+        ...backendPost,
+        places: sections,
+        images,
+        content,
+      });
+    }, 500); // имитация задержки
   }, [id]);
 
   if (!post) return <div className="py-10 text-center">Loading...</div>;
