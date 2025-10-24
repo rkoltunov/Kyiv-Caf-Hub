@@ -43,7 +43,7 @@ export const blogPosts: PageBlogPostResponseDto = {
       id: 2,
       title: 'Coffee that makes it onto your Instagram',
       excerpt:
-        'Kyiv is a city that not only impresses with its architectural beauty and history, but also delights gourmets with delicious coffee drinks.',
+        "Kyiv is a city that not only impresses with its architectural beauty and history, but also delights gourmets with delicious coffee drinks. The capital's Instagram...",
       content: '',
       slug: 'coffee-that-makes-it-onto-your-instagram',
       categories: [{ id: 2, name: 'Café review' }],
@@ -58,7 +58,7 @@ export const blogPosts: PageBlogPostResponseDto = {
       id: 3,
       title: 'Kyiv coffee shops where you feel at home',
       excerpt:
-        'If you like to enjoy a cup of aromatic coffee while reading or talking, Kyiv offers many cozy spots to do so.',
+        'Kyiv is a city that knows how to combine the taste of coffee with an atmosphere of comfort and literature. If you like to enjoy a cup of aromatic coffee while...',
       content: '',
       slug: 'kyiv-coffee-shops-where-you-feel-at-home',
       categories: [{ id: 3, name: 'Coffee history' }],
@@ -71,7 +71,7 @@ export const blogPosts: PageBlogPostResponseDto = {
       id: 4,
       title: '8 cafés in Kyiv with the best croissants',
       excerpt:
-        'A croissant is not just dough and butter. It’s a test of a baker’s skill, their ability to work with time, temperature and patience.',
+        "A croissant is not just dough and butter. It is a test of a baker's skill, their ability to work with time, temperature and patience. Kyiv has long spoken the...",
       content: '',
       slug: 'best-croissants-in-kyiv',
       categories: [{ id: 4, name: 'Best croissants' }],

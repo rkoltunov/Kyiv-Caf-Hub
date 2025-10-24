@@ -34,7 +34,7 @@ export default function AboutPage() {
         </div>
 
         {/* === Вторая секция === */}
-        <h2 className="font-heading font-medium text-center md:text-left text-[26px] sm:text-[32px] md:text-[48px] uppercase leading-tight mb-6 text-[#111]">
+        <h2 className="font-heading font-medium text-center  text-[26px] sm:text-[32px] md:text-[48px] uppercase leading-tight mb-6 text-[#111]">
           We don’t just list addresses
         </h2>
 
