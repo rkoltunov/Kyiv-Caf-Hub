@@ -54,7 +54,7 @@ export const InstagramSection: FC = () => {
       style={{ borderRadius: '0px 0px 30px 30px' }}
     >
       <div className="flex justify-center max-w-[1440px] mx-auto">
-        <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase tracking-wide text-center mb-4 md:mb-[14px]">
+        <h2 className="font-heading text-3xl md:text-4xl font-medium uppercase tracking-wide text-center mb-4 md:mb-[14px]">
           Share the joy of your coffee moment
         </h2>
       </div>

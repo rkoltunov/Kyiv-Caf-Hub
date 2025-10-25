@@ -2,8 +2,9 @@ import type { FC } from 'react';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { blogPosts } from '../../mocks/blogPosts';
-import ArrowIcon from '../../assets/icons/arrow-right_16.svg';
-import ButtonIcon from '../../assets/home/blog/menu8.svg'; // твоя кнопка
+import ArrowShort from "../../assets/icons/arrow-right_16.svg";
+import ArrowLong from "../../assets/icons/arrow-right_long_16.svg";
+import { ButtonIcon } from "../../components/ui/Button";
 
 type BlogPost = (typeof blogPosts.content)[0];
 
@@ -19,6 +20,8 @@ const BlogCard = memo(({ post, index }: { post: BlogPost; index: number }) => {
       className={`
         w-full max-w-[670px] h-[256px] bg-[#F9F8F5]
         border border-gray-300 rounded-[30px] flex overflow-hidden mx-auto
+    transition-all duration-300
+    hover:bg-white hover:border-[#21262B]
         ${imageOnRight ? 'md:flex-row-reverse' : ''}
       `}
     >
@@ -43,12 +46,8 @@ const BlogCard = memo(({ post, index }: { post: BlogPost; index: number }) => {
 
         {/* Кнопка */}
         <Link to={blogLink} className="flex justify-end">
-          <img
-            src={ButtonIcon || ArrowIcon}
-            alt="Read now"
-            className="h-8 md:h-12 w-[133px] transition-transform duration-300 hover:translate-x-1"
-          />
-        </Link>
+  <ButtonIcon label="Read article" />
+</Link>
       </div>
     </div>
   );
@@ -73,20 +72,49 @@ export const BlogSection: FC = () => {
       {/* Заголовок секции */}
       <div className="grid grid-cols-3 items-center max-w-[1440px] mx-auto mb-6">
         <div></div>
-        <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase tracking-wide text-center mb-4">
+        <h2 className="font-heading text-3xl md:text-4xl font-medium uppercase tracking-wide text-center mb-4">
           our blog
         </h2>
         <Link
-          to="/blog"
-          className="font-heading font-medium flex items-center gap-2 text-black underline justify-self-end mt-[28px]"
-        >
-          Read more
-          <img src={ArrowIcon} alt="" className="w-4 h-4" />
-        </Link>
+  to="/blog"
+  className="
+    font-heading font-medium flex items-center gap-1
+    text-[#21262B] underline justify-self-end mt-[28px]
+    transition-colors duration-200
+    hover:text-[#3D464D]
+    group/link
+  "
+>
+  See more
+
+  <div className="relative w-4 h-4 ml-1">
+    {/* короткая стрелка */}
+    <img
+      src={ArrowShort}
+      alt=""
+      className="
+        absolute inset-0 w-4 h-4 transition-opacity duration-200
+        group-hover/link:opacity-0
+        group-hover/link:[filter:invert(25%)_sepia(7%)_saturate(550%)_hue-rotate(160deg)_brightness(95%)_contrast(90%)]
+      "
+    />
+
+    {/* длинная стрелка */}
+    <img
+      src={ArrowLong}
+      alt=""
+      className="
+        absolute inset-0 w-4 h-4 opacity-0 transition-opacity duration-200
+        group-hover/link:opacity-100
+        group-hover/link:[filter:invert(25%)_sepia(7%)_saturate(550%)_hue-rotate(160deg)_brightness(95%)_contrast(90%)]
+      "
+    />
+  </div>
+</Link>
       </div>
 
       {/* Карточки блога */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 justify-items-center max-w-[1440px] mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 justify-items-center max-w-[1440px] mx-auto">
         {orderedPosts.map((post, index) => (
           <BlogCard key={post.id} post={post} index={index} />
         ))}

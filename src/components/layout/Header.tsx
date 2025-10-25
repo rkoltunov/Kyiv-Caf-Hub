@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Button } from "../ui/Button";
-import { NavItem } from "../ui/NavItem";
+import { ButtonNav } from "../ui/ButtonNav";
 
 import HomeIcon from "../../assets/home/nav/homedefault.svg";
 import HomeActiveIcon from "../../assets/home/nav/homea.svg";
@@ -42,51 +41,23 @@ export const Header = () => {
 
         {/* ── Desktop navigation ── */}
         <nav className="hidden md:flex gap-4 lg:gap-6 items-center">
-          <NavItem
-            to="/"
-            icon={HomeIcon}
-            activeIcon={HomeActiveIcon}
-            hoverIcon={HomeHoverIcon}
-            alt="Home"
-            noScale
-          />
-          <NavItem
-            to="/catalog"
-            icon={CatalogIcon}
-            activeIcon={CatalogActiveIcon}
-            hoverIcon={CatalogHoverIcon}
-            alt="Catalog"
-            noScale
-          />
-          <NavItem
-            to="/blog"
-            icon={BlogIcon}
-            activeIcon={BlogActiveIcon}
-            hoverIcon={BlogHoverIcon}
-            alt="Blog"
-            noScale
-          />
-          <NavItem
-            to="/about"
-            icon={AboutIcon}
-            activeIcon={AboutActiveIcon}
-            hoverIcon={AboutHoverIcon}
-            alt="About"
-            noScale
-          />
-        </nav>
+  <ButtonNav to="/" label="Home" />
+  <ButtonNav to="/catalog" label="Catalog" />
+  <ButtonNav to="/blog" label="Blog" />
+  <ButtonNav to="/about" label="About" />
+</nav>
 
         {/* ── Right side ── */}
         <div className="flex items-center gap-3 md:gap-5">
-          {/* Admin button */}
+          {/* Admin button 
           {isAdmin && (
             <NavLink to="/admin">
-              <Button variant="secondary" className="text-sm md:text-base px-2 md:px-4">
+              <ButtonIcon variant="secondary" className="text-sm md:text-base px-2 md:px-4">
                 Admin
-              </Button>
+              </ButtonIcon>
             </NavLink>
           )}
-
+*/}
           {/* Language toggle */}
           <div className="hidden sm:flex gap-1 items-center text-sm font-bold text-black/80">
             <button

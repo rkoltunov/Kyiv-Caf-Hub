@@ -1,20 +1,29 @@
-import type { FC, ButtonHTMLAttributes, ReactNode } from 'react';
+import type { FC } from "react";
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'secondary';
-  children: ReactNode;
+type ButtonIconProps = {
+  label: string;
+  onClick?: () => void;
+  className?: string;
 };
 
-export const Button: FC<Props> = ({ variant = 'primary', children, ...props }) => {
-  const baseClass = "px-4 py-2 rounded transition-colors duration-300";
-  const variants: Record<'primary'|'secondary', string> = {
-    primary: "bg-purple-600 text-white hover:bg-purple-700 active:bg-purple-800",
-    secondary: "bg-gray-400 text-gray-800 hover:bg-gray-500 active:bg-gray-600",
-  };
-
+export const ButtonIcon: FC<ButtonIconProps> = ({ label, onClick, className = "" }) => {
   return (
-    <button className={`${baseClass} ${variants[variant]}`} {...props}>
-      {children}
+    <button
+      onClick={onClick}
+      className={`
+        inline-flex items-center justify-center
+        px-[20px] py-3 rounded-[24px]
+        border border-[#21262B]
+        bg-[#F7F7F7]
+        shadow-[-3px_3px_0_#21262B]
+        font-heading font-medium text-[16px]
+        text-[#21262B]
+        transition-all duration-200 ease-in-out
+        hover:shadow-none
+        ${className}
+      `}
+    >
+      {label}
     </button>
   );
 };

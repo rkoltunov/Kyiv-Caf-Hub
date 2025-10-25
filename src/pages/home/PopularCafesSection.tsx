@@ -2,7 +2,8 @@ import type { FC } from "react";
 import { Link } from "react-router-dom";
 import { CafeCard } from "../../components/ui/CafeCard";
 import { cafes } from "../../mocks/cafes";
-import ArrowIcon from "../../assets/icons/arrow-right_16.svg";
+import ArrowShort from "../../assets/icons/arrow-right_16.svg";
+import ArrowLong from "../../assets/icons/arrow-right_long_16.svg";
 
 export const PopularCafesSection: FC = () => {
   // Пока просто берём первые 4 как "популярные"
@@ -15,16 +16,45 @@ export const PopularCafesSection: FC = () => {
       {/* Заголовок */}
       <div className="grid grid-cols-3 items-center max-w-[1440px] mx-auto mb-6">
         <div></div>
-        <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase tracking-wide text-center mb-4">
+        <h2 className="font-heading text-3xl md:text-4xl font-medium uppercase tracking-wide text-center mb-4">
           Popular in Kyiv
         </h2>
         <Link
-          to="/catalog"
-          className="font-heading font-medium flex items-center gap-2 text-black underline justify-self-end mt-[28px]"
-        >
-          See more
-          <img src={ArrowIcon} alt="" className="w-4 h-4" />
-        </Link>
+  to="/catalog"
+  className="
+    font-heading font-medium flex items-center gap-1
+    text-[#21262B] underline justify-self-end mt-[28px]
+    transition-colors duration-200
+    hover:text-[#3D464D]
+    group/link
+  "
+>
+  See more
+
+  <div className="relative w-4 h-4 ml-1">
+    {/* короткая стрелка */}
+    <img
+      src={ArrowShort}
+      alt=""
+      className="
+        absolute inset-0 w-4 h-4 transition-opacity duration-200
+        group-hover/link:opacity-0
+        group-hover/link:[filter:invert(25%)_sepia(7%)_saturate(550%)_hue-rotate(160deg)_brightness(95%)_contrast(90%)]
+      "
+    />
+
+    {/* длинная стрелка */}
+    <img
+      src={ArrowLong}
+      alt=""
+      className="
+        absolute inset-0 w-4 h-4 opacity-0 transition-opacity duration-200
+        group-hover/link:opacity-100
+        group-hover/link:[filter:invert(25%)_sepia(7%)_saturate(550%)_hue-rotate(160deg)_brightness(95%)_contrast(90%)]
+      "
+    />
+  </div>
+</Link>
       </div>
 
       {/* Сетка кафе */}
