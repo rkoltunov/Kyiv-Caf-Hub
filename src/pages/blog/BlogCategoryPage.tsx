@@ -4,12 +4,16 @@ import { blogPosts } from "../../mocks/blogPosts";
 import Cofee from "../../assets/home/blog/coffes.png";
 import { ButtonIcon } from "../../components/ui/Button";
 
-const categories = [
-  { name: "About baristas", slug: "about-baristas" },
-  { name: "Café review", slug: "café-review" },
-  { name: "Coffee history", slug: "coffee-history" },
-  { name: "Best croissants", slug: "best-croissants" },
-];
+const categories = Array.from(
+  new Set(
+    blogPosts.content
+      .flatMap((p) => p.categories?.map((c) => c.name))
+      .filter(Boolean)
+  )
+).map((name) => ({
+  name,
+  slug: name.toLowerCase().replace(/\s+/g, "-"),
+}));
 
 export default function BlogCategoryPage() {
   const { slug } = useParams<{ slug?: string }>();
@@ -70,26 +74,27 @@ export default function BlogCategoryPage() {
           </h2>
 
           <ul className="flex lg:block flex-wrap gap-3 sm:gap-4 text-sm sm:text-lg">
-            {categories.map((c) => (
-              <li key={c.slug}>
-                <NavLink
-                  to={`/blog/category/${c.slug}`}
-                  className={({ isActive }) =>
-                    [
-                      "block px-4 p-2 lg:px-1 lg:py-1 rounded-full border lg:border-0 transition-colors font-bold",
-                      isActive
-                        ? "bg-[#C6B0E7] text-black lg:bg-transparent lg:text-black underline decoration-2 underline-offset-4"
-                        : "bg-white lg:bg-transparent rounded-full lg:rounded-[30px] border lg:border-0 font-bold hover:bg-[#eadffa] hover:text-black transition",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")
-                  }
-                >
-                  {c.name}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+  {categories.map((c) => (
+    <li key={c.name}>
+      <NavLink
+        to={`/blog/category/${c.name.toLowerCase().replace(/\s+/g, "-")}`}
+        className={({ isActive }) =>
+          [
+            "block px-4 p-2 lg:px-1 lg:py-1 rounded-full border lg:border-0 transition-colors font-bold",
+            isActive
+              ? "bg-[#C6B0E7] text-black lg:bg-transparent lg:text-black underline decoration-2 underline-offset-4"
+              : "bg-white lg:bg-transparent rounded-full lg:rounded-[30px] border lg:border-0 font-bold hover:bg-[#eadffa] hover:text-black transition",
+          ]
+            .filter(Boolean)
+            .join(" ")
+        }
+      >
+        {c.name}
+      </NavLink>
+    </li>
+  ))}
+</ul>
+
         </aside>
 
         {/* MAIN POST */}

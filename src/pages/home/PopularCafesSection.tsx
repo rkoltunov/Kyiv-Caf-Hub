@@ -70,7 +70,7 @@ export const PopularCafesSection: FC = () => {
           return (
             <CafeCard
               key={cafe.id}
-              id={cafe.id}
+              slug={cafe.slug}
               title={cafe.name}
               metro={metro}
               image={image}

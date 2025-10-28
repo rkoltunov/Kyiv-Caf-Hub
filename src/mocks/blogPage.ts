@@ -16,6 +16,7 @@ type Place = {
 type BlogPost = {
   id: number;
   title: string;
+  slug: string;
   category: string;
   categorySlug: string;
   image: any;
@@ -64,8 +65,11 @@ export const convertBackendToOldFormat = (
     return {
       id: post.id,
       title: post.title,
+      slug: post.slug,
       category: post.categories[0]?.name || 'Uncategorized',
-      categorySlug: post.slug,
+      categorySlug: post.categories[0]
+      ? post.categories[0].name.toLowerCase().replace(/\s+/g, "-")
+      : "uncategorized",
       image: BlogImage2,
       date: 'Jun 19, 2025',
       readTime: '10 min read',

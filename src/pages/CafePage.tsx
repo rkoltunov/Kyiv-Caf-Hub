@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchCafes } from "../mocks/cafes";
 import CafeMap from "../utils/cafeMap";
 import type { CafeResponseDto } from "../types/dto";
@@ -13,7 +13,8 @@ import InstagramIcon from "../assets/icons/instagram.svg";
 
 export default function CafePage() {
   // ✅ Все хуки — на самом верху
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
   const { walkingTimes, setWalkingTime } = useStore();
   const [cafes, setCafes] = useState<CafeResponseDto[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,20 +27,24 @@ export default function CafePage() {
     });
   }, []);
 
+  const cafe = cafes.find((c) => c.slug === slug);
+
+  useEffect(() => {
+    if (!loading && !cafe) {
+      navigate("/404", { replace: true });
+    }
+  }, [loading, cafe, navigate]);
   // Пока загружается — просто спиннер
   if (loading)
     return <div className="p-10 text-center text-gray-600">Loading...</div>;
 
   // Ищем нужное кафе по id
-  const cafe = cafes.find((c) => c.id.toString() === id);
+
 
   // Если не найдено — сообщение об ошибке
-  if (!cafe)
-    return (
-      <div className="p-10 text-center text-gray-600">
-        Café not found 😢
-      </div>
-    );
+
+
+  if (!cafe) return null; 
 
   // ===============================
   // 📸 Изображения
@@ -54,7 +59,7 @@ export default function CafePage() {
 
   let timeOnFoot = "";
   if (metro && metroCoords) {
-    const cached = walkingTimes[cafe.id.toString()];
+    const cached = walkingTimes[cafe.slug];
     if (cached) {
       timeOnFoot = cached;
     } else {
@@ -63,7 +68,7 @@ export default function CafePage() {
         metroCoords,
       );
       timeOnFoot = calculated;
-      setWalkingTime(cafe.id.toString(), calculated);
+      setWalkingTime(cafe.slug, calculated);
     }
   }
 

@@ -10,7 +10,7 @@ type BlogPost = (typeof blogPosts.content)[0];
 
 const BlogCard = memo(({ post, index }: { post: BlogPost; index: number }) => {
   const imageOnRight = index < 2;
-  const blogLink = `/blog/${post.id}`;
+  const blogLink = `/blog/${post.slug}`;
 
   const image = post.images?.[0]?.imageUrl ?? '';
   const alt = post.images?.[0]?.altText ?? post.title;

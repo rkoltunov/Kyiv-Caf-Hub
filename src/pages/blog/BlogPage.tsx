@@ -1,18 +1,23 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { blogPage as mockPosts } from "../../mocks/blogPage";
 
 export default function BlogPostPage() {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>(); // ✅ заменили id на slug
   const [post, setPost] = useState<any>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Имитация fetch с задержкой
     setTimeout(() => {
-      // Берём пост из мока по id
-      const backendPost = mockPosts.find((p) => p.id === Number(id)) || mockPosts[0];
+      // ✅ ищем пост по slug, а не по id
+      const backendPost = mockPosts.find((p) => p.slug === slug);
 
-      // Эмулируем бекенд: "content" как плоский HTML
+      if (!backendPost) {
+        navigate("/404", { replace: true });
+        return;
+      }
+
+      // эмуляция бекенда
       const content = backendPost.places
         .map(
           (place) =>
@@ -26,16 +31,14 @@ export default function BlogPostPage() {
         altText: place.title,
       }));
 
-      // Парсим плоский content обратно в массив places
       const parser = new DOMParser();
       const doc = parser.parseFromString(content, "text/html");
       const sections = Array.from(doc.querySelectorAll("h3")).map((h3, i) => {
         let el = h3.nextElementSibling;
         const descEls: string[] = [];
         let verdictHTML = "";
-      
+
         while (el && el.tagName.toLowerCase() !== "h3") {
-          // если нашли verdict (например, содержит слово Verdict)
           if (el.outerHTML.toLowerCase().includes("verdict")) {
             verdictHTML = el.outerHTML;
           } else {
@@ -43,7 +46,7 @@ export default function BlogPostPage() {
           }
           el = el.nextElementSibling;
         }
-      
+
         return {
           id: i + 1,
           title: h3.textContent,
@@ -59,15 +62,14 @@ export default function BlogPostPage() {
         images,
         content,
       });
-    }, 500); // имитация задержки
-  }, [id]);
+    }, 500);
+  }, [slug]);
 
   if (!post) return <div className="py-10 text-center">Loading...</div>;
 
   return (
     <div className="bg-[#F9F8F5] min-h-screen rounded-[30px]">
-
-      {/* Хедер поста */}
+      {/* 🟡 Header */}
       <div className="bg-[#FFF3C8] pt-[55px]" style={{ borderRadius: "30px 30px 0 0" }}>
         <div className="px-[42px] pb-10 text-sm">
           <Link to="/blog" className="hover:underline text-gray-600">
@@ -84,11 +86,13 @@ export default function BlogPostPage() {
           <span>{post.title}</span>
         </div>
 
-        <div className="mx-[42px]  pb-[58px] flex flex-col md:flex-row gap-4 items-start md:items-center"
-                style={{
-                  paddingLeft: "clamp(10px, 8vw, 114px)",
-                  paddingRight: "clamp(10px, 8vw, 114px)",
-                }}>
+        <div
+          className="mx-[42px] pb-[58px] flex flex-col md:flex-row gap-4 items-start md:items-center"
+          style={{
+            paddingLeft: "clamp(10px, 8vw, 114px)",
+            paddingRight: "clamp(10px, 8vw, 114px)",
+          }}
+        >
           <div className="flex-1">
             <div className="flex items-center gap-[30px] mb-8">
               <span className="px-4 py-2 rounded-[8px] bg-black text-white text-lg font-medium font-heading">
@@ -112,26 +116,28 @@ export default function BlogPostPage() {
         </div>
       </div>
 
-      {/* Основной текст */}
+      {/* 🟡 Content */}
       <div
-  className="
-    blog-content
-    py-[56px]
-    transition-all duration-300
-    max-w-[898px]
-    mx-auto
-    px-[20px] sm:px-[30px] lg:px-0
-  "
->
+        className="
+          blog-content
+          py-[56px]
+          transition-all duration-300
+          max-w-[898px]
+          mx-auto
+          px-[20px] sm:px-[30px] lg:px-0
+        "
+      >
         <div className="mb-10" dangerouslySetInnerHTML={{ __html: post.intro }} />
 
         {post.places.map((place: any) => (
-          <div key={place.id}   className="
-          mb-10
-          px-4 sm:px-6 md:px-10 lg:px-[60px] xl:px-[114px]
-          transition-all duration-300
-        "
-      >
+          <div
+            key={place.id}
+            className="
+              mb-10
+              px-4 sm:px-6 md:px-10 lg:px-[60px] xl:px-[114px]
+              transition-all duration-300
+            "
+          >
             <h3 className="text-[22px] font-bold mb-4">{place.title}</h3>
             <div
               className="text-[16px] leading-[1.6] mb-6"

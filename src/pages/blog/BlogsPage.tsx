@@ -5,6 +5,14 @@ import { blogPosts } from "../../mocks/blogPosts"; // 👈 импорт моко
 import Cofee from "../../assets/home/blog/coffes.png";
 import { ButtonIcon } from "../../components/ui/Button";
 
+const categories = Array.from(
+  new Set(
+    blogPosts.content
+      .flatMap((p) => p.categories?.map((c) => c.name)) // вытягиваем все имена категорий
+      .filter(Boolean) // убираем undefined
+  )
+);
+
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPostResponseDto[]>([]);
   const navigate = useNavigate();
@@ -51,17 +59,17 @@ export default function BlogPage() {
           </h2>
 
           <ul className="flex lg:block flex-wrap gap-3 sm:gap-4 text-sm sm:text-lg">
-            {["About baristas", "Café review", "Coffee history", "Best croissants"].map((cat) => (
-              <li key={cat}>
-                <Link
-                  to={`/blog/category/${cat.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="block px-4 p-2 lg:px-1 lg:py-1 bg-white lg:bg-transparent rounded-[30px] border lg:border-0 font-bold hover:bg-[#eadffa] hover:text-black transition"
-                >
-                  {cat}
-                </Link>
-              </li>
-            ))}
-          </ul>
+  {categories.map((cat) => (
+    <li key={cat}>
+      <Link
+        to={`/blog/category/${cat.toLowerCase().replace(/\s+/g, "-")}`}
+        className="block px-4 p-2 lg:px-1 lg:py-1 bg-white lg:bg-transparent rounded-[30px] border lg:border-0 font-bold hover:bg-[#eadffa] hover:text-black transition"
+      >
+        {cat}
+      </Link>
+    </li>
+  ))}
+</ul>
         </aside>
 
         {/* Blog list */}

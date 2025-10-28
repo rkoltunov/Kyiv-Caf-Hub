@@ -5,7 +5,7 @@ import ArrowShort from "../../assets/icons/arrow-right_16.svg";
 import ArrowLong from "../../assets/icons/arrow-right_long_16.svg";
 
 type CafeCardProps = {
-  id: number | string;
+  slug: string;
   title: string;
   metro?: string;
   description?: string;
@@ -14,7 +14,7 @@ type CafeCardProps = {
 };
 
 export const CafeCard: FC<CafeCardProps> = ({
-  id,
+  slug,
   title,
   metro,
   image,
@@ -34,7 +34,7 @@ export const CafeCard: FC<CafeCardProps> = ({
     >
       {/* Фото (кликабельно) */}
       <Link
-        to={`/cafes/${id}`}
+        to={`/cafe/${slug}`}
         className="relative w-full aspect-[4/5] mb-4 border border-gray-300 rounded-[12px] p-4 block overflow-hidden         hover:bg-white hover:shadow-[4px_3px_0_#21262B]"
       >
         <div className="w-full h-full rounded-[8px] overflow-hidden">
@@ -66,7 +66,7 @@ export const CafeCard: FC<CafeCardProps> = ({
 
         {/* Кнопка */}
         <Link
-  to={`/cafes/${id}`}
+  to={`/cafe/${slug}`}
   className="flex justify-start  group/link"
 >
   <div
