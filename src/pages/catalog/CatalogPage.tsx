@@ -1,16 +1,21 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { filterOptions } from "../../mocks/filterOptions";
+// ВАЖНО: читаем ключи фильтров из UI-констант, а не из mocks
 import FiltersSection from "../../components/filters/FiltersSection";
 import Breadcrumbs from "../../pages/catalog/Breadcrumbs";
 import SearchBar from "../../pages/catalog/SearchBar";
 import CafesGrid from "../../pages/catalog/CafesGrid";
 import { cafes } from "../../mocks/cafes";
+import { whiteFilters } from "../../components/filters/constants"; // ✅
 
 const ITEMS_PER_PAGE = 8;
 
+// Ключи фильтров, которые реально есть в UI
+const FILTER_KEYS: string[] = ["Metro station", ...Object.keys(whiteFilters)];
+
 interface Cafe {
-  id: string;
+  id: number;
+  slug: string;
   title: string;
   metro: string;
   description: string;
@@ -24,40 +29,43 @@ export default function CatalogPage() {
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // ✅ нормализуем кафе
   const normalizedCafes: Cafe[] = useMemo(
     () =>
       cafes.map((cafe) => ({
-        id: cafe.id.toString(),
+        id: cafe.id,
+        slug: cafe.slug,
         title: cafe.name,
         description: cafe.description,
         metro: cafe.tags.find((t) => t.category === "METRO")?.name || "",
         image:
           cafe.images && cafe.images.length > 0
-            ? cafe.images[0].imageUrl // берём первое изображение из массива
-            : "", // если нет фото
+            ? cafe.images[0].imageUrl
+            : "",
       })),
     []
   );
 
-  // 🧭 Чтение параметров из URL при загрузке
+  // ✅ Парсим URL один раз при загрузке и восстанавливаем состояние
   useEffect(() => {
-    const searchValue = searchParams.get("search") || "";
-    const filterValue = searchParams.get("filter");
+    const restored: Record<string, string[]> = {};
 
-    if (searchValue) {
-      setQuery(searchValue);
-    }
+    // Восстанавливаем фильтры только по тем ключам, которые есть в UI
+    FILTER_KEYS.forEach((key) => {
+      const v = searchParams.get(key);
+      if (v) restored[key] = v.split(",").filter(Boolean);
+    });
 
-    if (filterValue) {
-      const [category, value] = filterValue.split(":");
-      if (category && value && filterOptions[category]?.includes(value)) {
-        setSelectedFilters({ [category]: [value] });
-        setActiveFilters([value]);
-      }
-    }
-  }, [searchParams]);
+    // Восстанавливаем поиск
+    const q = searchParams.get("search") || "";
 
-  // 🔍 Фильтрация
+    setSelectedFilters(restored);
+    setActiveFilters(Object.values(restored).flat());
+    setQuery(q);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // ← важно: только при загрузке
+
+  // ✅ Фильтрация
   const filteredItems: Cafe[] = useMemo(() => {
     const q = query.trim().toLowerCase();
     let filtered = normalizedCafes;
@@ -72,45 +80,78 @@ export default function CatalogPage() {
     }
 
     Object.entries(selectedFilters).forEach(([filterName, options]) => {
-      if (options.length) {
-        filtered = filtered.filter((it) => {
-          const cafeTags = cafes.find((c) => c.id.toString() === it.id)?.tags || [];
-          if (filterName === "Metro station") {
-            return options.includes(it.metro);
-          }
-          const tagNames = cafeTags.map((t) => t.name);
-          return options.some((opt) => tagNames.includes(opt));
-        });
-      }
+      if (!options.length) return;
+
+      filtered = filtered.filter((it) => {
+        const cafeTags = cafes.find((c) => c.id === it.id)?.tags || [];
+        if (filterName === "Metro station") {
+          return options.includes(it.metro);
+        }
+        const tagNames = cafeTags.map((t) => t.name);
+        return options.some((opt) => tagNames.includes(opt));
+      });
     });
 
-    return [...filtered].sort((a, b) => Number(a.id) - Number(b.id));
+    return [...filtered].sort((a, b) => a.id - b.id);
   }, [query, selectedFilters, normalizedCafes]);
 
   const visibleItems = filteredItems.slice(0, visibleCount);
+
+  // Показать больше
   const handleShowMore = () => setVisibleCount((prev) => prev + ITEMS_PER_PAGE);
 
+  // ✅ Поиск: обновляем URL, но не трогаем фильтры
   const handleQueryChange = (value: string) => {
     setQuery(value);
     setVisibleCount(ITEMS_PER_PAGE);
-    setSearchParams(value ? { search: value } : {}); // обновляем URL
+
+    const newParams = new URLSearchParams();
+
+    // сохраняем фильтры как есть
+    FILTER_KEYS.forEach((key) => {
+      const vals = selectedFilters[key];
+      if (vals?.length) newParams.set(key, vals.join(","));
+    });
+
+    // добавляем/удаляем search
+    if (value) newParams.set("search", value);
+
+    setSearchParams(newParams);
   };
 
-  // 🧩 Обработка применения фильтров
+  // ✅ Применение фильтров: обновляем стейт и URL
   const handleApplyFilters = (filters: Record<string, string[]>) => {
     setSelectedFilters(filters);
-    setActiveFilters(
-      Object.values(filters)
-        .flat()
-        .filter((v) => !!v)
-    );
+    setActiveFilters(Object.values(filters).flat().filter(Boolean));
     setVisibleCount(ITEMS_PER_PAGE);
-    setSearchParams({}); // можно позже добавить sync с URL, если нужно
-    console.log("✅ Применены фильтры:", filters);
+
+    const newParams = new URLSearchParams();
+
+    // фильтры
+    Object.entries(filters).forEach(([key, values]) => {
+      if (values?.length) newParams.set(key, values.join(","));
+    });
+
+    // поисковый запрос сохраняем
+    if (query) newParams.set("search", query);
+
+    setSearchParams(newParams);
+  };
+
+  // ✅ Очистить фильтры: чистим и URL (кроме поиска)
+  const handleClearFilters = () => {
+    setSelectedFilters({});
+    setActiveFilters([]);
+    setVisibleCount(ITEMS_PER_PAGE);
+
+    const newParams = new URLSearchParams();
+    if (query) newParams.set("search", query);
+    setSearchParams(newParams);
   };
 
   return (
     <section className="bg-[#F7F7F7] py-10 sm:py-14 px-4 sm:px-8 lg:px-[42px] rounded-[20px] sm:rounded-[30px]">
+      {/* Можешь убрать Breadcrumbs, если не нужен */}
       <Breadcrumbs activeFilters={activeFilters} />
 
       {/* Фильтры и поиск */}
@@ -118,12 +159,7 @@ export default function CatalogPage() {
         <FiltersSection
           selectedFilters={selectedFilters}
           onApply={handleApplyFilters}
-          onClear={() => {
-            setSelectedFilters({});
-            setActiveFilters([]);
-            setVisibleCount(ITEMS_PER_PAGE);
-            setSearchParams({});
-          }}
+          onClear={handleClearFilters}
         />
 
         <div className="flex-1 w-full sm:w-auto">

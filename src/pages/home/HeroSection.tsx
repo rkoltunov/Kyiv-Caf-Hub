@@ -38,7 +38,10 @@ export const HeroSection: FC<HeroSectionProps> = ({
   };
 
   const handleFilterClick = (category: string, value: string) => {
-    navigate(`/catalog?filter=${encodeURIComponent(`${category}:${value}`)}`);
+    // Формируем URL по новой схеме
+    const params = new URLSearchParams();
+    params.set(category, value);
+    navigate(`/catalog?${params.toString()}`);
   };
 
 
@@ -186,19 +189,19 @@ export const HeroSection: FC<HeroSectionProps> = ({
           <div className="flex flex-wrap gap-2">
     <Tag
       label="#sugar-free desserts"
-      onClick={() => handleFilterClick("MENU", "Sugar-free desserts")}
+      onClick={() => handleFilterClick("Menu", "Sugar-free desserts")}
     />
     <Tag
       label="#quiet zone"
-      onClick={() => handleFilterClick("VIBE", "Quiet zone")}
+      onClick={() => handleFilterClick("Vibe", "Quiet zone")}
     />
     <Tag
       label="#matcha"
-      onClick={() => handleFilterClick("MENU", "Matcha")}
+      onClick={() => handleFilterClick("Menu", "Matcha")}
     />
     <Tag
       label="#pet-friendly"
-      onClick={() => handleFilterClick("VIBE", "Pet-friendly")}
+      onClick={() => handleFilterClick("Vibe", "Pet-friendly")}
     />
   </div>
         </div>
