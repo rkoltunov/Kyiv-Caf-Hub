@@ -5,6 +5,7 @@ import ArrowShort from "../../assets/icons/arrow-right_16.svg";
 import ArrowLong from "../../assets/icons/arrow-right_long_16.svg";
 
 type CafeCardProps = {
+  id?: number;
   slug: string;
   title: string;
   metro?: string;
