@@ -67,7 +67,7 @@ export const CafeCard: FC<CafeCardProps> = ({
         {/* Кнопка */}
         <Link
   to={`/cafes/${id}`}
-  className="flex justify-start mt-auto group/link"
+  className="flex justify-start  group/link"
 >
   <div
     className="

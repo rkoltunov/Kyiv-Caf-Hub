@@ -114,22 +114,24 @@ export default function BlogPostPage() {
 
       {/* Основной текст */}
       <div
-        className="
-          blog-content py-[56px]
-        "
-        style={{
-          marginLeft: "clamp(10px, 19vw, 271px)",
-          marginRight: "clamp(10px, 19vw, 271px)",
-        }}
-      >
+  className="
+    blog-content
+    py-[56px]
+    transition-all duration-300
+    max-w-[898px]
+    mx-auto
+    px-[20px] sm:px-[30px] lg:px-0
+  "
+>
         <div className="mb-10" dangerouslySetInnerHTML={{ __html: post.intro }} />
 
         {post.places.map((place: any) => (
-          <div key={place.id} className="mb-10 "
-          style={{
-            marginLeft: "clamp(40px, 8vw, 114px)",
-            marginRight: "clamp(40px, 8vw, 114px)",
-          }}>
+          <div key={place.id}   className="
+          mb-10
+          px-4 sm:px-6 md:px-10 lg:px-[60px] xl:px-[114px]
+          transition-all duration-300
+        "
+      >
             <h3 className="text-[22px] font-bold mb-4">{place.title}</h3>
             <div
               className="text-[16px] leading-[1.6] mb-6"

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import type { BlogPostResponseDto } from "../../types/dto";
 import { blogPosts } from "../../mocks/blogPosts"; // 👈 импорт моков
 import Cofee from "../../assets/home/blog/coffes.png";
-import ButtonIcon from "../../assets/home/blog/menu8.svg";
+import { ButtonIcon } from "../../components/ui/Button";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPostResponseDto[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // пока используем моки, не API
@@ -20,6 +21,9 @@ export default function BlogPage() {
       .catch((err) => console.error("Ошибка при загрузке блогов:", err));
     */
   }, []);
+  const handleNavigate = (slug: string) => {
+    navigate(`/blog/${slug}`);
+  };
 
   return (
     <div className="bg-[#F9F8F5] rounded-[30px] overflow-hidden">
@@ -51,7 +55,7 @@ export default function BlogPage() {
               <li key={cat}>
                 <Link
                   to={`/blog/category/${cat.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="block px-4 p-2 lg:px-1 lg:py-1 bg-white lg:bg-transparent rounded-[30px] border lg:border-0 font-bold hover:bg-[#C6B0E7] hover:text-black transition"
+                  className="block px-4 p-2 lg:px-1 lg:py-1 bg-white lg:bg-transparent rounded-[30px] border lg:border-0 font-bold hover:bg-[#eadffa] hover:text-black transition"
                 >
                   {cat}
                 </Link>
@@ -66,7 +70,7 @@ export default function BlogPage() {
             <Link
               key={post.id}
               to={`/blog/${post.slug}`}
-              className="flex flex-col sm:flex-row bg-[#F9F8F5] rounded-[30px] overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200"
+              className="flex flex-col sm:flex-row bg-[#F9F8F5] rounded-[30px] overflow-hidden border border-gray-200     hover:bg-white hover:border-[#21262B] duration-200"
             >
               {/* Image */}
               <div className="sm:basis-1/2 flex-shrink-0 h-[220px] sm:h-auto sm:max-h-[256px] overflow-hidden">
@@ -93,13 +97,13 @@ export default function BlogPage() {
                 </div>
 
                 <div className="flex justify-end mt-auto">
-                  <button className="transition hover:opacity-80">
-                    <img
-                      src={ButtonIcon}
-                      alt="Read article"
-                      className="w-[133px] sm:w-[133px] h-auto"
-                    />
-                  </button>
+                  <ButtonIcon
+                    label="Read article"
+                    onClick={(e) => {
+                      e.stopPropagation(); // 👈 чтобы не сработал клик по карточке
+                      handleNavigate(post.slug);
+                    }}
+                  />
                 </div>
               </div>
             </Link>

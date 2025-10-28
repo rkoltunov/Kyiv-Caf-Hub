@@ -1,6 +1,6 @@
 import BlogImage2 from '../assets/home/blog/imageblog2.png'; 
 import Image1 from '../assets/home/blog/image1.png'; 
-import Image2 from '../assets/home/blog/image1.png'; 
+import Image2 from '../assets/home/blog/image2.png'; 
 import Image3 from '../assets/home/blog/image3.png'; 
 import Image4 from '../assets/home/blog/image4.png'; 
 import Image5 from '../assets/home/blog/image5.png'; 

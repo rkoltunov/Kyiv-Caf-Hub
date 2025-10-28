@@ -2,46 +2,61 @@ export const ACCENT = "#C6B0E7";
 
 export const metroSubGroups: Record<string, string[]> = {
   "Red Line (Sviatoshynsko—Brovarska)": [
-    "Khreshchatyk",      // популярная
-    "Maidan Nezalezhnosti", // популярная
-    "Universytet",       // популярная
-    "Vokzalna",          // популярная
+    // ⭐ Популярные станции
+    "Khreshchatyk",      // центр, пересадка
+    "Teatralna",         // пересадка на зелёную ветку
+    "Universytet",       // центр, возле университета
+    "Vokzalna",          // вокзал
+    // Остальные станции
     "Akademmistechko",
     "Zhytomyrska",
     "Sviatoshyn",
     "Nyvky",
     "Beresteiska",
     "Shuliavska",
-    "Politechnichnyi Instytut",
-    "Teatralna",
-    "Ploshcha Lva Tolstoho",
-    "Olimpiiska",
+    "Politekhnichnyi instytut",
+    "Arsenalna",
+    "Dnipro",
+    "Hidropark",
+    "Livoberezhna",
+    "Darnytsia",
+    "Chernihivska",
+    "Lisova"
+  ],
+
+  "Blue Line (Obolonsko—Teremkivska)": [
+    // ⭐ Популярные станции
+    "Maidan Nezalezhnosti", // центр, пересадка
+    "Kontraktova Ploshcha", // Подол
+    "Ploshcha Lva Tolstoho", // пересадка
+    "Olimpiiska",            // центр
+    // Остальные станции
+    "Heroiv Dnipra",
+    "Minska",
+    "Obolon",
+    "Pochaina",
+    "Tarasa Shevchenka",
+    "Poshtova Ploshcha",
     "Palats Ukraina",
     "Lybidska",
     "Demiivska",
     "Holosiivska",
     "Vasylkivska",
     "Vystavkovyi Tsentr",
-    "Ippodrom",
+    "Ipodrom",
     "Teremky"
   ],
-  "Blue Line (Obolonsko—Teremkivska)": [
-    "Maidan Nezalezhnosti", // популярная
-    "Obolon",
-    "Kontraktova Ploshcha", // популярная
-    "Heroiv Dnipra",
-    "Minska",
-    "Petrivka",
-    "Tarasa Shevchenka",
-    "Poshtova Ploshcha"
-  ],
-  "Green Line (Svyatoshynsko—Pecherska)": [
+
+  "Green Line (Syretsko—Pecherska)": [
+    // ⭐ Популярные станции
+    "Zoloti Vorota",    // пересадка с красной веткой
+    "Palats Sportu",    // пересадка с синей веткой
+    "Klovska",          // центр
+    "Pecherska",        // деловой район
+    // Остальные станции
     "Syrets",
-    "Zoloti Vorota",
-    "Klovska",
-    "Dovbyk",
+    "Dorohozhychi",
     "Lukianivska",
-    "Pecherska",
     "Druzhby Narodiv",
     "Vydubychi",
     "Slavutych",
@@ -50,7 +65,7 @@ export const metroSubGroups: Record<string, string[]> = {
     "Kharkivska",
     "Vyrlytsia",
     "Boryspilska",
-    "Chervonyi Khutir"
+    "Chervony Khutir"
   ]
 };
 import { filterOptions } from "../../mocks/filterOptions";

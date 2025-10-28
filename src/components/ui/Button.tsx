@@ -2,8 +2,9 @@ import type { FC } from "react";
 
 type ButtonIconProps = {
   label: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
+  
 };
 
 export const ButtonIcon: FC<ButtonIconProps> = ({ label, onClick, className = "" }) => {

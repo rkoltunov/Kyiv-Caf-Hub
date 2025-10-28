@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode;
   footer?: React.ReactNode;
   variant?: "primary" | "white";
-  contentRef?: React.RefObject<HTMLDivElement>;
+  contentRef?: React.RefObject<HTMLDivElement | null>;
   fullScreen?: boolean;
 }
 
@@ -16,7 +16,6 @@ export const DropdownWrapper: React.FC<Props> = ({
   onClose,
   children,
   footer,
-  variant = "primary",
   contentRef,
   fullScreen = false,
 }) => {
@@ -172,7 +171,7 @@ export const DropdownWrapper: React.FC<Props> = ({
         flex flex-col rounded-xl border border-black bg-[#F7F7F7] shadow-xl
       `}
       style={{
-        maxHeight: "75vh",
+        maxHeight: "75vh" || maxHeight ,
         overflow: "hidden",
       }}
     >

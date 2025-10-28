@@ -15,6 +15,7 @@ const BlogCard = memo(({ post, index }: { post: BlogPost; index: number }) => {
   const image = post.images?.[0]?.imageUrl ?? '';
   const alt = post.images?.[0]?.altText ?? post.title;
 
+
   return (
     <div
       className={`

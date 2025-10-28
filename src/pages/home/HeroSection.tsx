@@ -41,19 +41,6 @@ export const HeroSection: FC<HeroSectionProps> = ({
     navigate(`/catalog?filter=${encodeURIComponent(`${category}:${value}`)}`);
   };
 
-  // 🟡 Цвета границы по состояниям
-  const getBorderColor = () => {
-    if (isFocused) return "border-[#21262B]";
-    if (searchQuery) return "border-[#5C717E]";
-    if (isHovered) return "border-[#5C717E]";
-    return "border-transparent";
-  };
-
-  // 🟡 Цвет текста по состояниям
-  const getTextColor = () => {
-    if (isFocused || searchQuery) return "text-[#21262B]"; // черный при вводе и фокусе
-    return "text-[#4F5F6B]"; // серый в остальном
-  };
 
   return (
     <div
@@ -196,12 +183,24 @@ export const HeroSection: FC<HeroSectionProps> = ({
         {/* ==== Фильтры ==== */}
         <div className="relative flex items-center justify-center gap-3 w-full mt-4 flex-wrap">
           <span className="whitespace-nowrap">Popular filters:</span>
-          <div className="flex flex-wrap gap-2 ">
-  <Tag label="#sugar-free desserts" />
-  <Tag label="#quiet zone" />
-  <Tag label="#matcha" />
-  <Tag label="#pet-friendly" />
-</div>
+          <div className="flex flex-wrap gap-2">
+    <Tag
+      label="#sugar-free desserts"
+      onClick={() => handleFilterClick("MENU", "Sugar-free desserts")}
+    />
+    <Tag
+      label="#quiet zone"
+      onClick={() => handleFilterClick("VIBE", "Quiet zone")}
+    />
+    <Tag
+      label="#matcha"
+      onClick={() => handleFilterClick("MENU", "Matcha")}
+    />
+    <Tag
+      label="#pet-friendly"
+      onClick={() => handleFilterClick("VIBE", "Pet-friendly")}
+    />
+  </div>
         </div>
       </div>
     </div>

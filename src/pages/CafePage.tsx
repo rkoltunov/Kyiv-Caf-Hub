@@ -3,17 +3,22 @@ import { useParams } from "react-router-dom";
 import { fetchCafes } from "../mocks/cafes";
 import CafeMap from "../utils/cafeMap";
 import type { CafeResponseDto } from "../types/dto";
+import { metroStationsMock } from "../mocks/metroStationsMock";
+import { getWalkingTime } from "../utils/getWalkingTime";
+import { useStore } from "../app/store";
+
 import LocationIcon from "../assets/icons/location.svg";
 import ShareIcon from "../assets/icons/share.svg";
 import InstagramIcon from "../assets/icons/instagram.svg";
 
-
-
 export default function CafePage() {
+  // ✅ Все хуки — на самом верху
   const { id } = useParams<{ id: string }>();
+  const { walkingTimes, setWalkingTime } = useStore();
   const [cafes, setCafes] = useState<CafeResponseDto[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Загружаем список кафе
   useEffect(() => {
     fetchCafes().then((data) => {
       setCafes(data);
@@ -21,11 +26,14 @@ export default function CafePage() {
     });
   }, []);
 
+  // Пока загружается — просто спиннер
   if (loading)
     return <div className="p-10 text-center text-gray-600">Loading...</div>;
 
+  // Ищем нужное кафе по id
   const cafe = cafes.find((c) => c.id.toString() === id);
 
+  // Если не найдено — сообщение об ошибке
   if (!cafe)
     return (
       <div className="p-10 text-center text-gray-600">
@@ -33,17 +41,35 @@ export default function CafePage() {
       </div>
     );
 
-  // Преобразуем изображения
-  const photos = cafe.images.length
-    ? cafe.images.map((img) => img.imageUrl)
-    : [];
-  
-  // Метро и время на основе тегов
-  const metro = cafe.tags.find((t) => t.category === "METRO")?.name || "";
-  const timeOnFoot =
-    cafe.tags.find((t) => t.category === "ACCESSIBILITY")?.name || "";
+  // ===============================
+  // 📸 Изображения
+  // ===============================
+  const photos = cafe.images.length ? cafe.images.map((img) => img.imageUrl) : [];
 
-  // Теги по категориям
+  // ===============================
+  // 🚇 Метро и время пешком
+  // ===============================
+  const metro = cafe.tags.find((t) => t.category === "METRO")?.name || "";
+  const metroCoords = metroStationsMock[metro as keyof typeof metroStationsMock];
+
+  let timeOnFoot = "";
+  if (metro && metroCoords) {
+    const cached = walkingTimes[cafe.id.toString()];
+    if (cached) {
+      timeOnFoot = cached;
+    } else {
+      const calculated = getWalkingTime(
+        { lat: cafe.latitude, lon: cafe.longitude },
+        metroCoords,
+      );
+      timeOnFoot = calculated;
+      setWalkingTime(cafe.id.toString(), calculated);
+    }
+  }
+
+  // ===============================
+  // 🏷️ Теги по категориям
+  // ===============================
   const servingTags = cafe.tags
     .filter((t) => t.category === "MENU")
     .map((t) => t.name);
@@ -52,9 +78,14 @@ export default function CafePage() {
     .map((t) => t.name);
   const budget = cafe.tags.find((t) => t.category === "BUDGET")?.name || "";
 
-  // Карта
+  // ===============================
+  // 🗺️ Карта
+  // ===============================
   const mapLocation = cafe.address;
 
+  // ===============================
+  // 💅 Разметка страницы
+  // ===============================
   return (
     <section className="bg-[#F9F8F5] rounded-[30px] w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-[42px] xl:px-[42px] py-8 md:py-[58px] transition-all duration-300">
       {/* Breadcrumbs */}
@@ -85,13 +116,11 @@ export default function CafePage() {
 
             <div className="flex items-center gap-3 flex-wrap">
               {metro && (
-                <span className="inline-block px-3 py-1 rounded-[8px]  text-gray-700 border border-gray-300 font-medium">
+                <span className="inline-block px-3 py-1 rounded-[8px] text-gray-700 border border-gray-300 font-medium">
                   {metro}
                 </span>
               )}
-              {timeOnFoot && (
-                <span>{timeOnFoot}</span>
-              )}
+              {timeOnFoot && <span>{timeOnFoot}</span>}
             </div>
           </div>
 
@@ -118,11 +147,15 @@ export default function CafePage() {
         </div>
 
         {/* Right block — gallery */}
-        <div className="w-full lg:w-2/3 h-auto lg:h-[420px] flex flex-col sm:flex-row gap-2 p-4 lg:p-6"
-        style={{ borderRadius: '30px 30px 30px 30px' }}>
+        <div
+          className="w-full lg:w-2/3 h-auto lg:h-[420px] flex flex-col sm:flex-row gap-2 p-4 lg:p-6"
+          style={{ borderRadius: "30px 30px 30px 30px" }}
+        >
           {/* Left column */}
-          <div className="flex-1 bg-gray-100  overflow-hidden"
-                  style={{ borderRadius: '30px 0px 0px 30px' }}>
+          <div
+            className="flex-1 bg-gray-100 overflow-hidden"
+            style={{ borderRadius: "30px 0px 0px 30px" }}
+          >
             <img
               src={photos[0]}
               alt=""
@@ -133,7 +166,7 @@ export default function CafePage() {
 
           {/* Middle column */}
           <div className="flex-1 flex flex-col gap-2">
-            <div className="flex-1 bg-gray-100  overflow-hidden">
+            <div className="flex-1 bg-gray-100 overflow-hidden">
               <img
                 src={photos[1]}
                 alt=""
@@ -141,7 +174,7 @@ export default function CafePage() {
                 loading="lazy"
               />
             </div>
-            <div className="flex-1 bg-gray-100  overflow-hidden">
+            <div className="flex-1 bg-gray-100 overflow-hidden">
               <img
                 src={photos[2]}
                 alt=""
@@ -152,8 +185,10 @@ export default function CafePage() {
           </div>
 
           {/* Right column */}
-          <div className="flex-1 bg-gray-100  overflow-hidden"
-                            style={{ borderRadius: '0px 30px 30px 0px' }}>
+          <div
+            className="flex-1 bg-gray-100 overflow-hidden"
+            style={{ borderRadius: "0px 30px 30px 0px" }}
+          >
             <img
               src={photos[3]}
               alt=""
@@ -170,22 +205,22 @@ export default function CafePage() {
           <h2 className="text-3xl md:text-4xl font-heading font-medium uppercase mb-3">
             About
           </h2>
-          <p className=" mb-10  leading-relaxed">
-            {cafe.description}
-          </p>
+          <p className="mb-10 leading-relaxed">{cafe.description}</p>
         </div>
 
         {/* Tags */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {metro && (
-            <div className="border border-[#E5E7EB] rounded-[16px] p-4">
-              <h4 className="font-semibold text-2xl mb-2 uppercase">Metro station</h4>
+            <div className="border border-[#A8B1B8] rounded-[16px] p-4">
+              <h4 className="font-semibold text-2xl mb-2 uppercase">
+                Metro station
+              </h4>
               <p>{metro}</p>
             </div>
           )}
 
           {servingTags.length > 0 && (
-            <div className="border border-[#E5E7EB] rounded-[16px] p-4">
+            <div className="border border-[#A8B1B8] rounded-[16px] p-4">
               <h4 className="font-semibold text-2xl mb-2 uppercase">Serving</h4>
               <ul className="space-y-1">
                 {servingTags.map((s) => (
@@ -196,7 +231,7 @@ export default function CafePage() {
           )}
 
           {servicesTags.length > 0 && (
-            <div className="border border-[#E5E7EB] rounded-[16px] p-4">
+            <div className="border border-[#A8B1B8] rounded-[16px] p-4">
               <h4 className="font-semibold text-2xl mb-2 uppercase">Services</h4>
               <ul className="space-y-1">
                 {servicesTags.map((s) => (
@@ -207,7 +242,7 @@ export default function CafePage() {
           )}
 
           {budget && (
-            <div className="border border-[#E5E7EB] rounded-[16px] p-4">
+            <div className="border border-[#A8B1B8] rounded-[16px] p-4">
               <h4 className="font-semibold text-2xl mb-2 uppercase">Budget</h4>
               <p>{budget}</p>
             </div>
@@ -220,19 +255,23 @@ export default function CafePage() {
         <h2 className="text-center text-3xl md:text-4xl font-heading font-medium uppercase mb-2">
           Cafe location
         </h2>
-        <p className="text-center mb-8 text-gray-700 text-sm md:text-base">{mapLocation}</p>
+        <p className="text-center mb-8 text-gray-700 text-sm md:text-base">
+          {mapLocation}
+        </p>
 
         <div className="relative w-full h-[300px] md:h-[400px] overflow-hidden rounded-[20px] border">
-        <CafeMap lat={cafe.latitude} lng={cafe.longitude} />
-  <a
-    href={`https://www.google.com/maps?q=${encodeURIComponent(mapLocation)}&hl=en`}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black text-white px-6 py-4 rounded-full  font-medium hover:bg-[#333] transition"
-  >
-    Open in Google
-  </a>
-</div>
+          <CafeMap lat={cafe.latitude} lng={cafe.longitude} />
+          <a
+            href={`https://www.google.com/maps?q=${encodeURIComponent(
+              mapLocation
+            )}&hl=en`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black text-white px-6 py-4 rounded-full font-medium hover:bg-[#333] transition"
+          >
+            Open in Google
+          </a>
+        </div>
       </div>
     </section>
   );

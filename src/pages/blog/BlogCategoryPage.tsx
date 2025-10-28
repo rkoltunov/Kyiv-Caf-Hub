@@ -1,8 +1,8 @@
-import { useParams, NavLink, Link } from "react-router-dom";
+import { useParams, NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { blogPosts } from "../../mocks/blogPosts";
 import Cofee from "../../assets/home/blog/coffes.png";
-import ButtonIcon from "../../assets/home/blog/menu8.svg";
+import { ButtonIcon } from "../../components/ui/Button";
 
 const categories = [
   { name: "About baristas", slug: "about-baristas" },
@@ -14,14 +14,13 @@ const categories = [
 export default function BlogCategoryPage() {
   const { slug } = useParams<{ slug?: string }>();
   const [postsInCategory, setPostsInCategory] = useState<typeof blogPosts.content>([]);
+  const navigate = useNavigate();
 
   const posts = blogPosts.content;
 
   useEffect(() => {
     const filtered = posts.filter((p) =>
-      p.categories.some(
-        (c) => c.name.toLowerCase().replace(/\s+/g, "-") === slug
-      )
+      p.categories.some((c) => c.name.toLowerCase().replace(/\s+/g, "-") === slug)
     );
     setPostsInCategory(filtered);
   }, [slug, posts]);
@@ -40,6 +39,10 @@ export default function BlogCategoryPage() {
   const categoryTitle = slug
     ? slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())
     : "Blog";
+
+  const handleNavigate = (slug: string) => {
+    navigate(`/blog/${slug}`);
+  };
 
   return (
     <div className="bg-[#F9F8F5] rounded-[20px] sm:rounded-[30px] overflow-hidden">
@@ -73,10 +76,10 @@ export default function BlogCategoryPage() {
                   to={`/blog/category/${c.slug}`}
                   className={({ isActive }) =>
                     [
-                      "block px-4 p-2 lg:px-1 lg:py-1 rounded-full lg:rounded-none border lg:border-0 transition-colors font-bold",
+                      "block px-4 p-2 lg:px-1 lg:py-1 rounded-full border lg:border-0 transition-colors font-bold",
                       isActive
                         ? "bg-[#C6B0E7] text-black lg:bg-transparent lg:text-black underline decoration-2 underline-offset-4"
-                        : "bg-white lg:bg-transparent rounded-full lg:rounded-[30px] border lg:border-0 font-bold hover:bg-[#C6B0E7] hover:text-black transition",
+                        : "bg-white lg:bg-transparent rounded-full lg:rounded-[30px] border lg:border-0 font-bold hover:bg-[#eadffa] hover:text-black transition",
                     ]
                       .filter(Boolean)
                       .join(" ")
@@ -92,16 +95,16 @@ export default function BlogCategoryPage() {
         {/* MAIN POST */}
         <div className="flex-1 flex flex-col gap-10">
           {mainPost ? (
-            <Link
-              to={`/blog/${mainPost.id}`}
-              className="flex flex-col sm:flex-row gap-2 bg-[#F9F8F5] rounded-[30px] overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200"
+            <div
+              onClick={() => handleNavigate(mainPost.slug)} // 👈 клик по карточке
+              className="cursor-pointer flex flex-col sm:flex-row gap-2 bg-[#F9F8F5] rounded-[30px] overflow-hidden border border-gray-200 hover:bg-white hover:border-[#21262B] duration-200 group"
               aria-label={mainPost.title}
             >
               <div className="sm:w-[50%] h-[220px] sm:h-[256px] overflow-hidden">
                 <img
                   src={mainPost.images?.[0]?.imageUrl}
                   alt={mainPost.title}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
 
@@ -117,16 +120,16 @@ export default function BlogCategoryPage() {
 
                 {/* Кнопка справа */}
                 <div className="flex justify-end mt-auto">
-                  <button className="transition hover:opacity-80">
-                    <img
-                      src={ButtonIcon}
-                      alt="Read article"
-                      className="w-[133px] sm:w-[133px] h-auto"
-                    />
-                  </button>
+                  <ButtonIcon
+                    label="Read article"
+                    onClick={(e) => {
+                      e.stopPropagation(); // 🚫 блокируем общий клик
+                      handleNavigate(mainPost.slug);
+                    }}
+                  />
                 </div>
               </div>
-            </Link>
+            </div>
           ) : (
             <div className="p-6 bg-white rounded-[20px] border border-gray-200 text-center">
               <p className="text-gray-600">No article found for this category.</p>
@@ -143,16 +146,16 @@ export default function BlogCategoryPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {relatedPosts.map((post) => (
-            <Link
+            <div
               key={post.id}
-              to={`/blog/${post.id}`}
-              className="flex flex-col sm:flex-row gap-2 bg-[#F9F8F5] rounded-[30px] overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200"
+              onClick={() => handleNavigate(post.slug)}
+              className="cursor-pointer flex flex-col sm:flex-row gap-2 bg-[#F9F8F5] rounded-[30px] overflow-hidden border border-gray-200 hover:bg-white hover:border-[#21262B] duration-200 group"
             >
               <div className="sm:w-[50%] h-[256px] overflow-hidden">
                 <img
                   src={post.images?.[0]?.imageUrl}
                   alt={post.title}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
 
@@ -165,16 +168,16 @@ export default function BlogCategoryPage() {
                 </div>
 
                 <div className="flex justify-end mt-auto">
-                  <button className="transition hover:opacity-80">
-                    <img
-                      src={ButtonIcon}
-                      alt="Read article"
-                      className="w-[133px] sm:w-[133px] h-auto"
-                    />
-                  </button>
+                  <ButtonIcon
+                    label="Read article"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleNavigate(post.slug);
+                    }}
+                  />
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </section>

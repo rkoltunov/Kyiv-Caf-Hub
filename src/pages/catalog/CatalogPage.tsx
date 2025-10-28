@@ -7,8 +7,6 @@ import SearchBar from "../../pages/catalog/SearchBar";
 import CafesGrid from "../../pages/catalog/CafesGrid";
 import { cafes } from "../../mocks/cafes";
 
-
-
 const ITEMS_PER_PAGE = 8;
 
 interface Cafe {
@@ -19,8 +17,6 @@ interface Cafe {
   image: string;
 }
 
-
-
 export default function CatalogPage() {
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({});
   const [query, setQuery] = useState("");
@@ -28,18 +24,20 @@ export default function CatalogPage() {
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
-
-  const normalizedCafes: Cafe[] = useMemo(() =>
-    cafes.map((cafe) => ({
-      id: cafe.id.toString(),
-      title: cafe.name,
-      description: cafe.description,
-      metro: cafe.tags.find(t => t.category === "METRO")?.name || "",
-      image: cafe.images && cafe.images.length > 0
-        ? cafe.images[0].imageUrl // берём первое изображение из массива
-        : "", // если нет фото
-    }))
-  , []);
+  const normalizedCafes: Cafe[] = useMemo(
+    () =>
+      cafes.map((cafe) => ({
+        id: cafe.id.toString(),
+        title: cafe.name,
+        description: cafe.description,
+        metro: cafe.tags.find((t) => t.category === "METRO")?.name || "",
+        image:
+          cafe.images && cafe.images.length > 0
+            ? cafe.images[0].imageUrl // берём первое изображение из массива
+            : "", // если нет фото
+      })),
+    []
+  );
 
   // 🧭 Чтение параметров из URL при загрузке
   useEffect(() => {
@@ -59,22 +57,6 @@ export default function CatalogPage() {
     }
   }, [searchParams]);
 
-  const toggleFilterOption = (filterName: string, option: string) => {
-    setSelectedFilters(prev => {
-      const prevOptions = prev[filterName] || [];
-      const isSelected = prevOptions.includes(option);
-      const newOptions = isSelected
-        ? prevOptions.filter(o => o !== option)
-        : [...prevOptions, option];
-
-      if (newOptions.length === 0) {
-        const { [filterName]: _, ...rest } = prev;
-        return rest;
-      }
-      return { ...prev, [filterName]: newOptions };
-    });
-  };
-
   // 🔍 Фильтрация
   const filteredItems: Cafe[] = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -82,7 +64,7 @@ export default function CatalogPage() {
 
     if (q) {
       filtered = filtered.filter(
-        it =>
+        (it) =>
           it.title.toLowerCase().includes(q) ||
           it.description.toLowerCase().includes(q) ||
           it.metro.toLowerCase().includes(q)
@@ -91,13 +73,13 @@ export default function CatalogPage() {
 
     Object.entries(selectedFilters).forEach(([filterName, options]) => {
       if (options.length) {
-        filtered = filtered.filter(it => {
-          const cafeTags = cafes.find(c => c.id.toString() === it.id)?.tags || [];
+        filtered = filtered.filter((it) => {
+          const cafeTags = cafes.find((c) => c.id.toString() === it.id)?.tags || [];
           if (filterName === "Metro station") {
             return options.includes(it.metro);
           }
-          const tagNames = cafeTags.map(t => t.name);
-          return options.some(opt => tagNames.includes(opt));
+          const tagNames = cafeTags.map((t) => t.name);
+          return options.some((opt) => tagNames.includes(opt));
         });
       }
     });
@@ -106,12 +88,25 @@ export default function CatalogPage() {
   }, [query, selectedFilters, normalizedCafes]);
 
   const visibleItems = filteredItems.slice(0, visibleCount);
-  const handleShowMore = () => setVisibleCount(prev => prev + ITEMS_PER_PAGE);
+  const handleShowMore = () => setVisibleCount((prev) => prev + ITEMS_PER_PAGE);
 
   const handleQueryChange = (value: string) => {
     setQuery(value);
     setVisibleCount(ITEMS_PER_PAGE);
     setSearchParams(value ? { search: value } : {}); // обновляем URL
+  };
+
+  // 🧩 Обработка применения фильтров
+  const handleApplyFilters = (filters: Record<string, string[]>) => {
+    setSelectedFilters(filters);
+    setActiveFilters(
+      Object.values(filters)
+        .flat()
+        .filter((v) => !!v)
+    );
+    setVisibleCount(ITEMS_PER_PAGE);
+    setSearchParams({}); // можно позже добавить sync с URL, если нужно
+    console.log("✅ Применены фильтры:", filters);
   };
 
   return (
@@ -122,23 +117,12 @@ export default function CatalogPage() {
       <div className="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 items-start mb-8 sm:mb-10">
         <FiltersSection
           selectedFilters={selectedFilters}
-          onFilterToggle={(filterName: string, option: string) => {
-            toggleFilterOption(filterName, option);
-            setActiveFilters(prev =>
-              prev.includes(option) ? prev.filter(f => f !== option) : [...prev, option]
-            );
-            setVisibleCount(ITEMS_PER_PAGE);
-            setSearchParams({ filter: option }); // фильтр → в URL
-          }}
+          onApply={handleApplyFilters}
           onClear={() => {
             setSelectedFilters({});
             setActiveFilters([]);
             setVisibleCount(ITEMS_PER_PAGE);
-            setSearchParams({}); // очищаем URL
-          }}
-          onApply={() => {
-            console.log("Применены фильтры:", selectedFilters);
-            setVisibleCount(ITEMS_PER_PAGE);
+            setSearchParams({});
           }}
         />
 

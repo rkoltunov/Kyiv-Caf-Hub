@@ -6,10 +6,12 @@ type Store = {
   setFilter: <K extends keyof FiltersState>(key: K, value: FiltersState[K]) => void;
   reset: () => void;
 
-  // Авторизация (localStorage)
   token: string | null;
   setToken: (token: string | null) => void;
   logout: () => void;
+
+  walkingTimes: Record<string, string>;
+  setWalkingTime: (cafeId: string, time: string) => void;
 };
 
 export const useStore = create<Store>((set) => ({
@@ -18,7 +20,6 @@ export const useStore = create<Store>((set) => ({
     set((s) => ({ filters: { ...s.filters, [key]: value } })),
   reset: () => set({ filters: {} }),
 
-  // Авторизация
   token: typeof window !== "undefined" ? localStorage.getItem("token") : null,
   setToken: (token) => {
     if (token) {
@@ -32,4 +33,8 @@ export const useStore = create<Store>((set) => ({
     localStorage.removeItem("token");
     set({ token: null });
   },
+
+  walkingTimes: {},
+  setWalkingTime: (cafeId, time) =>
+    set((s) => ({ walkingTimes: { ...s.walkingTimes, [cafeId]: time } })),
 }));

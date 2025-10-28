@@ -1,16 +1,23 @@
 import type { CafeResponseDto } from "../types/dto";
-import Photo1 from '../assets/home/card/image1.png';
-import Photo2 from '../assets/home/card/image2.png';
-import Photo3 from '../assets/home/card/image3.png';
-import Photo4 from '../assets/home/card/image4.png';
-import Photo5 from '../assets/home/card/image5.png';
-import Photo6 from '../assets/home/card/image6.png';
-import Photo7 from '../assets/home/card/image7.png';
-import Photo8 from '../assets/home/card/image8.png';
-import Main from "../assets/home/cafepage/main.png";
-import Small1 from "../assets/home/cafepage/small1.png";
-import Small2 from "../assets/home/cafepage/small2.png";
-import Right from "../assets/home/cafepage/right.png";
+import TeddyBarCafe from '../assets/home/cafepage/teddy.png';
+import TeddySmall1 from "../assets/home/cafepage/teddysmal1.png";
+import TeddySmall2 from "../assets/home/cafepage/teddysmal2.png";
+import TeddyRight from "../assets/home/cafepage/teddyright.png";
+
+import MatchaBar from '../assets/home/cafepage/matcha.png';
+import MatchaSmall1 from "../assets/home/cafepage/matchasmal1.png";
+import MatchaSmall2 from "../assets/home/cafepage/matchasmal2.png";
+import MatchaRight from "../assets/home/cafepage/matcharight.png";
+import Photo3 from '../assets/home/cafepage/image3.png';
+import Photo4 from '../assets/home/cafepage/image4.png';
+import Photo5 from '../assets/home/cafepage/image5.png';
+import Photo6 from '../assets/home/cafepage/image6.png';
+import Photo7 from '../assets/home/cafepage/image7.png';
+import Photo8 from '../assets/home/cafepage/image8.png';
+import Sereda from "../assets/home/cafepage/sereda.png";
+import SeredaSmall1 from "../assets/home/cafepage/seredasmall1.png";
+import SeredaSmall2 from "../assets/home/cafepage/seredasmall2.png";
+import SeredaRight from "../assets/home/cafepage/seredaright.png";
 
 
 // 👇 Моковые данные для разработки
@@ -24,7 +31,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Nyzhnii Val Street, 39, Kyiv",
     latitude: 50.4684,
     longitude: 30.5151,
-    hours: { weekdays: "Mon-Fri 10:00-20:00", weekend: "Sat-Sun 11:00-21:00" },
+    hours: { weekdays: "Mon-Fri from 10:00 AM to 8:00 PM", weekend: "Sat-Sun from 11:00 AM to 9:00 PM" },
     tags: [
       { id: 1, name: "Kontraktova Ploshcha", slug: "kontraktova-ploshcha", category: "METRO" },
       { id: 2, name: "Cozy for meetings", slug: "cozy-for-meetings", category: "VIBE" },
@@ -33,35 +40,34 @@ const mockCafes: CafeResponseDto[] = [
       { id: 5, name: "Sugar-free desserts", slug: "sugar-free-desserts", category: "MENU" },
       { id: 6, name: "Accessibility", slug: "accessibility", category: "ACCESSIBILITY" },
       { id: 7, name: "Free Wi-Fi", slug: "free-wifi", category: "ACCESSIBILITY" },
-      { id: 8, name: "$$", slug: "budget-2", category: "BUDGET" }
+      { id: 8, name: "$$$", slug: "budget-3", category: "BUDGET" }
     ],
-    images: [{ id: 1, imageUrl: Main, altText: "Main photo" },
-      { id: 2, imageUrl: Small1, altText: "Small photo 1" },
-      { id: 3, imageUrl: Small2, altText: "Small photo 2" },
-      { id: 4, imageUrl: Right, altText: "Right photo" },],
+    images: [{ id: 1, imageUrl: Sereda, altText: "Main photo" },
+      { id: 2, imageUrl: SeredaSmall1, altText: "Small photo 1" },
+      { id: 3, imageUrl: SeredaSmall2, altText: "Small photo 2" },
+      { id: 4, imageUrl: SeredaRight, altText: "Right photo" },],
   },
   {
     id: 1,
     name: "Teddy Bar Cafe",
     excerpt: "Modern café with excellent coffee",
-    description: "Coffee Hub serves specialty coffee and homemade pastries. Perfect spot for work or meetings in Kyiv city center.",
+    description: "Teddy Bar Cafe is a bright pink coffee shop near the Slavutych metro station, where all the walls are covered with teddy bears, creating a cosy and cute atmosphere. It is the perfect place for incredible photos, where stylish design is combined with delicious coffee and an original cocktail menu.",
     slug: "coffee-hub",
-    address: "Khreshchatyk Street, 22, Kyiv",
-    latitude: 50.4501,
-    longitude: 30.5234,
-    hours: { weekdays: "Mon-Fri 08:00-20:00", weekend: "Sat-Sun 09:00-19:00" },
+    address: "21a Tsentralna Street, building 2, Kyiv",
+    latitude: 50.4836, 
+    longitude: 30.4005,
+    hours: { weekdays: "Mon-Sun from 9:00 AM to 9:00 PM", weekend: "" },
     tags: [
       { id: 9, name: "Slavutych", slug: "slavutych", category: "METRO" },
-      { id: 10, name: "Work-friendly", slug: "work-friendly", category: "VIBE" },
-      { id: 11, name: "With terrace", slug: "with-terrace", category: "VIBE" },
-      { id: 12, name: "Finest pastries", slug: "finest-pastries", category: "MENU" },
+      { id: 12, name: "Instagrammable", slug: "instagrammable", category: "VIBE" },
       { id: 13, name: "Alternative milk", slug: "alternative-milk", category: "MENU" },
-      { id: 14, name: "Power outlets", slug: "power-outlets", category: "ACCESSIBILITY" },
-      { id: 15, name: "Restrooms", slug: "restrooms", category: "ACCESSIBILITY" },
       { id: 16, name: "$$", slug: "budget-2", category: "BUDGET" }
     ],
     images: [
-      { id: 3, imageUrl: Photo1 , altText: "Coffee Hub" }
+      { id: 3, imageUrl: TeddyBarCafe, altText: "Teddy Bar Cafe" },
+      { id: 4, imageUrl: TeddySmall1, altText: "Teddy Bar Cafe" },
+      { id: 5, imageUrl: TeddySmall2, altText: "Teddy Bar Cafe" },
+      { id: 6, imageUrl: TeddyRight , altText: "Teddy Bar Cafe" }
     ]
   },
   {
@@ -92,29 +98,31 @@ const mockCafes: CafeResponseDto[] = [
     id: 2,
     name: "DOT. MATCHA BAR & COFFEE",
     excerpt: "Relaxed vibe and great lattes",
-    description: "Latte Lounge is the perfect place to relax with friends, enjoy specialty lattes and light snacks.",
+    description: "DOT. MATCHA BAR & COFFEE is a bright spot for matcha lovers in the city centre, where every drink and dessert creates a mood. Here, a stylish atmosphere is combined with a creative menu, and matcha sweets and drinks made with alternative milk become a real ritual of energy and inspiration.",
     slug: "latte-lounge",
-    address: "Shevchenko Blvd, 12, Kyiv",
-    latitude: 50.4470,
-    longitude: 30.5190,
-    hours: { weekdays: "08:00-20:00", weekend: "09:00-19:00" },
+    address: "1/2 Baseina Street, Kyiv",
+    latitude: 50.4417, 
+    longitude: 30.5224,
+    hours: { weekdays: "Mon-Sun from 08:00 AM to 10:00 PM", weekend: "" },
     tags: [
-      { id: 25, name: "Universytet", slug: "universytet", category: "METRO" },
-      { id: 26, name: "With terrace", slug: "with-terrace", category: "VIBE" },
-      { id: 27, name: "Pet-friendly", slug: "pet-friendly", category: "VIBE" },
-      { id: 28, name: "Finest pastries", slug: "finest-pastries", category: "MENU" },
-      { id: 29, name: "Vegan desserts", slug: "vegan-desserts", category: "MENU" },
+      { id: 25, name: "Palats Sportu", slug: "palats-sportu", category: "METRO" },
+      { id: 37, name: "Alternative milk", slug: "alternative-milk", category: "MENU" },
+      { id: 20, name: "Matcha", slug: "matcha", category: "MENU" },
+      { id: 28, name: "Instagrammable", slug: "instagrammable", category: "VIBE" },
       { id: 30, name: "Restrooms", slug: "restrooms", category: "ACCESSIBILITY" },
       { id: 31, name: "Accessibility", slug: "accessibility", category: "ACCESSIBILITY" },
-      { id: 32, name: "$$", slug: "budget-2", category: "BUDGET" }
+      { id: 32, name: "$$$", slug: "budget-3", category: "BUDGET" }
     ],
     images: [
-      { id: 5, imageUrl: Photo2, altText: "Latte Lounge" }
+      { id: 5, imageUrl: MatchaBar, altText: "Latte Lounge" },
+      { id: 6, imageUrl: MatchaSmall1, altText: "Latte Lounge" },
+      { id: 7, imageUrl: MatchaSmall2, altText: "Latte Lounge" },
+      { id: 8, imageUrl: MatchaRight, altText: "Latte Lounge" }
     ]
   },
   {
     id: 5,
-    name: "Green Bean Café",
+    name: "KATIMO CAFÉ – KATIMO MATCHA CLUB",
     excerpt: "Eco-friendly café with fresh options",
     description: "Green Bean Café focuses on sustainability and organic ingredients. A perfect spot for healthy eating and coffee lovers.",
     slug: "green-bean-cafe",
@@ -123,7 +131,7 @@ const mockCafes: CafeResponseDto[] = [
     longitude: 30.5210,
     hours: { weekdays: "08:00-19:00", weekend: "09:00-20:00" },
     tags: [
-      { id: 33, name: "Ploshcha Lva Tolstoho", slug: "ploshcha-lva-tolstoho", category: "METRO" },
+      { id: 33, name: "Zoloti Vorota", slug: "zoloti-vorota", category: "METRO" },
       { id: 34, name: "Instagrammable", slug: "instagrammable", category: "VIBE" },
       { id: 35, name: "With terrace", slug: "with-terrace", category: "VIBE" },
       { id: 36, name: "Vegan desserts", slug: "vegan-desserts", category: "MENU" },
@@ -138,7 +146,7 @@ const mockCafes: CafeResponseDto[] = [
   },
   {
     id: 6,
-    name: "Urban Coffee Lab",
+    name: "Set Cafe",
     excerpt: "Experimental coffee and trendy atmosphere",
     description: "Urban Coffee Lab serves unique coffee blends in a modern, minimalist space ideal for young professionals.",
     slug: "urban-coffee-lab",
@@ -147,7 +155,7 @@ const mockCafes: CafeResponseDto[] = [
     longitude: 30.4980,
     hours: { weekdays: "07:30-19:00", weekend: "08:00-20:00" },
     tags: [
-      { id: 41, name: "Obolon", slug: "obolon", category: "METRO" },
+      { id: 41, name: "Kontraktova Ploshcha", slug: "kontraktova-ploshcha", category: "METRO" },
       { id: 42, name: "Work-friendly", slug: "work-friendly", category: "VIBE" },
       { id: 43, name: "Cozy for meetings", slug: "cozy-for-meetings", category: "VIBE" },
       { id: 44, name: "Finest pastries", slug: "finest-pastries", category: "MENU" },
@@ -162,7 +170,7 @@ const mockCafes: CafeResponseDto[] = [
   },
   {
     id: 7,
-    name: "Mocha Mood",
+    name: "Cafe Charlotte",
     excerpt: "Chill café for coffee and desserts",
     description: "Mocha Mood offers relaxing atmosphere, specialty mochas, cakes and a friendly environment for small gatherings.",
     slug: "mocha-mood",
@@ -171,7 +179,7 @@ const mockCafes: CafeResponseDto[] = [
     longitude: 30.5170,
     hours: { weekdays: "08:00-21:00", weekend: "09:00-22:00" },
     tags: [
-      { id: 49, name: "Vokzalna", slug: "vokzalna", category: "METRO" },
+      { id: 49, name: "Maidan Nezalezhnosti", slug: "maidan", category: "METRO" },
       { id: 50, name: "Kid-friendly", slug: "kid-friendly", category: "VIBE" },
       { id: 51, name: "With music", slug: "with-music", category: "VIBE" },
       { id: 52, name: "Vegan desserts", slug: "vegan-desserts", category: "MENU" },
@@ -186,7 +194,7 @@ const mockCafes: CafeResponseDto[] = [
   },
   {
     id: 8,
-    name: "Latte Lounge",
+    name: "Lila Cake",
     excerpt: "Relaxed vibe and great lattes",
     description: "Latte Lounge is the perfect place to relax with friends, enjoy specialty lattes and light snacks.",
     slug: "latte-lounge",
@@ -195,7 +203,7 @@ const mockCafes: CafeResponseDto[] = [
     longitude: 30.5190,
     hours: { weekdays: "08:00-20:00", weekend: "09:00-19:00" },
     tags: [
-      { id: 25, name: "Universytet", slug: "universytet", category: "METRO" },
+      { id: 25, name: "Teatralna", slug: "teatralna", category: "METRO" },
       { id: 26, name: "With terrace", slug: "with-terrace", category: "VIBE" },
       { id: 27, name: "Pet-friendly", slug: "pet-friendly", category: "VIBE" },
       { id: 28, name: "Finest pastries", slug: "finest-pastries", category: "MENU" },
@@ -229,7 +237,7 @@ const mockCafes: CafeResponseDto[] = [
       { id: 3, name: "$$$", slug: "budget-3", category: "BUDGET" }
     ],
     images: [
-      { id: 1, imageUrl: Photo1, altText: "Main photo" },
+      { id: 1, imageUrl: TeddyBarCafe, altText: "Main photo" },
 
     ]
   },
@@ -254,7 +262,7 @@ const mockCafes: CafeResponseDto[] = [
       { id: 6, name: "$$", slug: "budget-2", category: "BUDGET" }
     ],
     images: [
-      { id: 3, imageUrl: Photo2, altText: "Coffee Hub" }
+      { id: 3, imageUrl: MatchaBar, altText: "Coffee Hub" }
     ]
   },
   {

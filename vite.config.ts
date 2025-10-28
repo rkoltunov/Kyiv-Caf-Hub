@@ -9,6 +9,7 @@ export default defineConfig({
       svgrOptions: { icon: true },
     }),
   ],
+  appType: "spa",
   server: {
     port: 3000,
     open: true,
@@ -18,10 +19,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
-    },// ✅ чтобы F5 на /cafe/1 не давал 404
+    },
   },
   esbuild: {
     loader: "tsx",
     include: /src\/.*\.tsx?$/,
   },
+  
 });
