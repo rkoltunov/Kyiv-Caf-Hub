@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getCafeById } from "../api/cafe";
+//import { getCafeById } from "../api/cafe";
+import { getCafeById } from "../api/cafeSafe";
 import type { CafeResponseDto } from "../types/dto";
 import { metroStationsMock } from "../mocks/metroStationsMock";
 import { getWalkingTime } from "../utils/getWalkingTime";
