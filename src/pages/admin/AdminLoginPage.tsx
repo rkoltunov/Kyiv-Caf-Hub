@@ -31,7 +31,7 @@ export default function AdminLoginPage() {
         throw new Error("Token not returned by server");
       }
       setToken(token);
-      navigate("/admin/dashboard");
+      navigate("/admin/cafes");
     } catch (err) {
       setError("Неверный email или пароль");
     }

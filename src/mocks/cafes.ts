@@ -31,7 +31,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Nyzhnii Val Street, 39, Kyiv",
     latitude: 50.4684,
     longitude: 30.5151,
-    hours: { weekdays: "Mon-Fri from 10:00 AM to 8:00 PM", weekend: "Sat-Sun from 11:00 AM to 9:00 PM" },
+    hours: "Mon-Fri from 10:00 AM to 8:00 PM; Sat-Sun from 11:00 AM to 9:00 PM",
     tags: [
       { id: 1, name: "Kontraktova Ploshcha", slug: "kontraktova-ploshcha", category: "METRO" },
       { id: 2, name: "Cozy for meetings", slug: "cozy-for-meetings", category: "VIBE" },
@@ -56,7 +56,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "21a Tsentralna Street, building 2, Kyiv",
     latitude: 50.4836, 
     longitude: 30.4005,
-    hours: { weekdays: "Mon-Sun from 9:00 AM to 9:00 PM", weekend: "" },
+    hours:"Mon-Sun from 9:00 AM to 9:00 PM",
     tags: [
       { id: 9, name: "Slavutych", slug: "slavutych", category: "METRO" },
       { id: 12, name: "Instagrammable", slug: "instagrammable", category: "VIBE" },
@@ -79,7 +79,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Bohdana Khmelnytskoho Street, 14, Kyiv",
     latitude: 50.4444,
     longitude: 30.5180,
-    hours: { weekdays: "Mon-Fri 09:00-19:00", weekend: "Sat-Sun 10:00-18:00" },
+    hours:"Mon-Fri 09:00-19:00; Sat-Sun 10:00-18:00",
     tags: [
       { id: 17, name: "Maidan Nezalezhnosti", slug: "maidan", category: "METRO" },
       { id: 18, name: "Kid-friendly", slug: "kid-friendly", category: "VIBE" },
@@ -103,7 +103,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "1/2 Baseina Street, Kyiv",
     latitude: 50.4417, 
     longitude: 30.5224,
-    hours: { weekdays: "Mon-Sun from 08:00 AM to 10:00 PM", weekend: "" },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 25, name: "Palats Sportu", slug: "palats-sportu", category: "METRO" },
       { id: 37, name: "Alternative milk", slug: "alternative-milk", category: "MENU" },
@@ -129,7 +129,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Velyka Vasylkivska St, 18, Kyiv",
     latitude: 50.4475,
     longitude: 30.5210,
-    hours: { weekdays: "08:00-19:00", weekend: "09:00-20:00" },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 33, name: "Zoloti Vorota", slug: "zoloti-vorota", category: "METRO" },
       { id: 34, name: "Instagrammable", slug: "instagrammable", category: "VIBE" },
@@ -153,7 +153,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Obolon Ave, 5, Kyiv",
     latitude: 50.4810,
     longitude: 30.4980,
-    hours: { weekdays: "07:30-19:00", weekend: "08:00-20:00" },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 41, name: "Kontraktova Ploshcha", slug: "kontraktova-ploshcha", category: "METRO" },
       { id: 42, name: "Work-friendly", slug: "work-friendly", category: "VIBE" },
@@ -177,7 +177,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Velyka Zhytomyrska St, 2, Kyiv",
     latitude: 50.4530,
     longitude: 30.5170,
-    hours: { weekdays: "08:00-21:00", weekend: "09:00-22:00" },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 49, name: "Maidan Nezalezhnosti", slug: "maidan", category: "METRO" },
       { id: 50, name: "Kid-friendly", slug: "kid-friendly", category: "VIBE" },
@@ -201,7 +201,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Shevchenko Blvd, 12, Kyiv",
     latitude: 50.4470,
     longitude: 30.5190,
-    hours: { weekdays: "08:00-20:00", weekend: "09:00-19:00" },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 25, name: "Teatralna", slug: "teatralna", category: "METRO" },
       { id: 26, name: "With terrace", slug: "with-terrace", category: "VIBE" },
@@ -226,10 +226,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Nyzhnii Val Street, 39, Kyiv",
     latitude: 50.4684,
     longitude: 30.5151,
-    hours: {
-      weekdays: "Mon-Fri 10:00-20:00",
-      weekend: "Sat-Sun 11:00-21:00"
-    },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 10, name: "Kontraktova Ploshcha", slug: "kontraktova-ploshcha", category: "METRO" },
       { id: 1, name: "Vegan desserts", slug: "vegan", category: "MENU" },
@@ -251,10 +248,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Khreshchatyk Street, 22, Kyiv",
     latitude: 50.4501,
     longitude: 30.5234,
-    hours: {
-      weekdays: "Mon-Fri 08:00-20:00",
-      weekend: "Sat-Sun 09:00-19:00"
-    },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 11, name: "Khreshchatyk", slug: "khreshchatyk", category: "METRO" },
       { id: 4, name: "Coffee & pastries", slug: "coffee", category: "MENU" },
@@ -275,10 +269,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Bohdana Khmelnytskoho Street, 14, Kyiv",
     latitude: 50.4444,
     longitude: 30.5180,
-    hours: {
-      weekdays: "Mon-Fri 09:00-19:00",
-      weekend: "Sat-Sun 10:00-18:00"
-    },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 12, name: "Teatralna", slug: "teatralna", category: "METRO" },
       { id: 7, name: "Quiet place", slug: "quiet", category: "VIBE" },
@@ -298,7 +289,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Shevchenko Blvd, 12, Kyiv",
     latitude: 50.4470,
     longitude: 30.5190,
-    hours: { weekdays: "08:00-20:00", weekend: "09:00-19:00" },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 13, name: "Universytet", slug: "universytet", category: "METRO" },
       { id: 9, name: "Latte", slug: "latte", category: "MENU" },
@@ -318,7 +309,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Podilskyi St, 7, Kyiv",
     latitude: 50.4685,
     longitude: 30.5150,
-    hours: { weekdays: "09:00-19:00", weekend: "10:00-18:00" },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 14, name: "Kontraktova Ploshcha", slug: "kontraktova-ploshcha", category: "METRO" },
       { id: 11, name: "Hip vibe", slug: "hip", category: "VIBE" },
@@ -338,7 +329,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Velyka Vasylkivska, 21, Kyiv",
     latitude: 50.4330,
     longitude: 30.5210,
-    hours: { weekdays: "08:00-20:00", weekend: "09:00-19:00" },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 15, name: "Olimpiiska", slug: "olimpiiska", category: "METRO" },
       { id: 13, name: "Chocolate", slug: "chocolate", category: "MENU" },
@@ -358,7 +349,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "Maiden Lane, 3, Kyiv",
     latitude: 50.4500,
     longitude: 30.5200,
-    hours: { weekdays: "07:00-19:00", weekend: "08:00-18:00" },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 16, name: "Maidan Nezalezhnosti", slug: "maidan", category: "METRO" },
       { id: 15, name: "Takeaway", slug: "takeaway", category: "VIBE" },
@@ -378,7 +369,7 @@ const mockCafes: CafeResponseDto[] = [
     address: "St. Andrew’s Street, 15, Kyiv",
     latitude: 50.4440,
     longitude: 30.5155,
-    hours: { weekdays: "09:00-18:00", weekend: "10:00-17:00" },
+    hours: "Mon-Sun from 08:00 AM to 10:00 PM",
     tags: [
       { id: 17, name: "Kontraktova Ploshcha", slug: "kontraktova-ploshcha", category: "METRO" },
       { id: 18, name: "Healthy", slug: "healthy", category: "MENU" },

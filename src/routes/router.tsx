@@ -1,43 +1,57 @@
 import { createBrowserRouter } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import HomePage from "../pages/home/HomePage";
 import CatalogPage from "../pages/catalog/CatalogPage";
 import CafePage from "../pages/CafePage";
 import BlogsPage from "../pages/blog/BlogsPage";
 import BlogPage from "../pages/blog/BlogPage";
 import AboutPage from "../pages/AboutPage";
-import AdminLoginPage from "../pages/admin/AdminLoginPage";
-import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
+import BlogCategoryPage from "../pages/blog/BlogCategoryPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import { MainLayout } from "../components/layout/MainLayout";
-import BlogCategoryPage from "../pages/blog/BlogCategoryPage";
-import PrivateRoute from "../components/PrivateRoute";
+
+import AdminLoginPage from "../pages/admin/AdminLoginPage";
 import AdminCafesPage from "../pages/admin/AdminCafesPage";
+import PrivateRoute from "../components/PrivateRoute";
+import AdminLayout from "../pages/admin/AdminLayout";
+import AdminAddImagePage from "../pages/admin/AdminAddImagePage";
+import AdminAddTagPage from "../pages/admin/AdminAddTagPage";
+
+// добавим layout
 
 export const router = createBrowserRouter([
+  // ======= Обычные страницы =======
   {
     element: <MainLayout />,
     children: [
       { path: "/", element: <HomePage /> },
+      { path: "/catalog", element: <CatalogPage /> },
       { path: "/cafe/:slug", element: <CafePage /> },
+      { path: "/about", element: <AboutPage /> },
       { path: "/blog", element: <BlogsPage /> },
       { path: "/blog/:slug", element: <BlogPage /> },
-      { path: "/about", element: <AboutPage /> },
-      { path: "/catalog", element: <CatalogPage /> },
       { path: "/blog/category/:slug", element: <BlogCategoryPage /> },
       { path: "/404", element: <NotFoundPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },
 
-  // 🧩 Админка
+  // ======= Админка =======
   {
     path: "/admin",
     children: [
-      { index: true, element: <AdminLoginPage /> },
+      // 🔑 Login
+      { index: true, element: <Navigate to="/admin/login" replace /> },
+      { path: "login", element: <AdminLoginPage /> },
+
+      // 🔐 Закрытые маршруты
       {
-        element: <PrivateRoute />, // защита
-        children: [{ path: "dashboard", element: <AdminDashboardPage /> },
+        element: <PrivateRoute><AdminLayout /></PrivateRoute>,
+        children: [
           { path: "cafes", element: <AdminCafesPage /> },
+          { path: "addtag", element: <AdminAddTagPage /> },
+          { path: "addimage", element: <AdminAddImagePage /> },
+
         ],
       },
     ],

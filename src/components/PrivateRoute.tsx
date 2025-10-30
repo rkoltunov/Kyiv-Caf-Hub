@@ -1,12 +1,18 @@
+// src/components/PrivateRoute.tsx
 import { Navigate, Outlet } from "react-router-dom";
 import { useStore } from "../app/store";
+import type { ReactElement, ReactNode } from "react";
 
-export default function PrivateRoute() {
+type PrivateRouteProps = {
+  children?: ReactElement | ReactNode;
+};
+
+export default function PrivateRoute({ children }: PrivateRouteProps) {
   const token = useStore((s) => s.token);
 
   if (!token) {
-    return <Navigate to="/admin" replace />;
+    return <Navigate to="/admin/login" replace />;
   }
 
-  return <Outlet />;
+  return <>{children || <Outlet />}</>;
 }

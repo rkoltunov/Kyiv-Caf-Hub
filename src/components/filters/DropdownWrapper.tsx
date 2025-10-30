@@ -57,6 +57,90 @@ export const DropdownWrapper: React.FC<Props> = ({
     window.addEventListener("resize", handlePosition);
     return () => window.removeEventListener("resize", handlePosition);
   }, [title]);
+  useLayoutEffect(() => {
+    const handlePosition = () => {
+      const width = window.innerWidth;
+      const btnRect = dropdownRef.current?.parentElement?.getBoundingClientRect();
+      const dropdownWidth =
+        title === "Filters" || title === "Metro station" ? 474 : 366;
+
+      let openLeft = false;
+
+      if (
+        (title === "Budget" && width < 1100) ||
+        (title === "Amenities" && width < 945)
+      ) {
+        openLeft = true;
+      }
+
+      if (btnRect && btnRect.left + dropdownWidth > width - 10) {
+        openLeft = true;
+      }
+
+      setShouldOpenLeft(openLeft);
+    };
+
+    handlePosition();
+    window.addEventListener("resize", handlePosition);
+    return () => window.removeEventListener("resize", handlePosition);
+  }, [title]);
+
+  // === 🔧 фикс чтоб не уезжал за хедер ===
+// === 🔧 фикс чтоб не уезжал за хедер и открывался под кнопкой (адаптивно) ===
+useLayoutEffect(() => {
+  const header = document.querySelector("header");
+
+  const updateDropdownPosition = () => {
+    const dropdown = dropdownRef.current;
+    const parent = dropdown?.parentElement;
+    if (!dropdown || !parent || !header) return;
+
+    const parentRect = parent.getBoundingClientRect();
+    const headerBottom = header.getBoundingClientRect().bottom;
+    const screenWidth = window.innerWidth;
+
+    // === 📱 FULLSCREEN при узком экране (872px и меньше) ===
+    if (screenWidth <= 872) {
+      dropdown.style.position = "fixed";
+      dropdown.style.top = `${headerBottom}px`;
+      dropdown.style.left = "0";
+      dropdown.style.right = "0";
+      dropdown.style.width = "100vw";
+      dropdown.style.height = `calc(100vh - ${headerBottom }px)`;
+      dropdown.style.borderRadius = "30px 30px 0 0"; // ← скруглённый верх
+      dropdown.style.overflow = "hidden";
+      dropdown.style.zIndex = "50";
+      return;
+    }
+
+    // === 💻 Десктоп ===
+    const top = Math.max(parentRect.bottom, headerBottom + 8);
+    dropdown.style.position = "fixed";
+    dropdown.style.top = `${top}px`;
+    dropdown.style.height = "auto";// ← твои 30px скругления
+    dropdown.style.width = ""; // сброс на авто
+
+    if (shouldOpenLeft) {
+      // если фильтр должен открываться влево
+      const right = window.innerWidth - parentRect.right;
+      dropdown.style.right = `${right}px`;
+      dropdown.style.left = "auto";
+    } else {
+      dropdown.style.left = `${parentRect.left}px`;
+      dropdown.style.right = "auto";
+    }
+  };
+
+  updateDropdownPosition();
+  window.addEventListener("scroll", updateDropdownPosition);
+  window.addEventListener("resize", updateDropdownPosition);
+
+  return () => {
+    window.removeEventListener("scroll", updateDropdownPosition);
+    window.removeEventListener("resize", updateDropdownPosition);
+  };
+}, [shouldOpenLeft]);
+
 
   // === Высота для десктопа ===
   const updateHeight = () => {
@@ -171,7 +255,7 @@ export const DropdownWrapper: React.FC<Props> = ({
         flex flex-col rounded-xl border border-black bg-[#F7F7F7] shadow-xl
       `}
       style={{
-        maxHeight: "75vh" || maxHeight ,
+        maxHeight: "72vh" || maxHeight ,
         overflow: "hidden",
       }}
     >

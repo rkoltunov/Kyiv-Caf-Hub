@@ -1,15 +1,62 @@
 import type { FC } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CafeCard } from "../../components/ui/CafeCard";
-import { cafes } from "../../mocks/cafes";
+import { cafes as mockCafes } from "../../mocks/cafes";
+import api from "../../api";
 import ArrowShort from "../../assets/icons/arrow-right_16.svg";
 import ArrowLong from "../../assets/icons/arrow-right_long_16.svg";
 
 export const PopularCafesSection: FC = () => {
-  // Пока просто берём первые 4 как "популярные"
-  const popularCafes = [...cafes]
-    .sort((a, b) => a.id - b.id)
-    .slice(0, 4);
+  const [popularCafes, setPopularCafes] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPopular = async () => {
+      try {
+        const res = await api.get("/cafe", { params: { size: 16 } });
+        const data = res.data.content || res.data || [];
+
+        // ✅ сортируем по id
+        const sorted = [...data].sort((a: any, b: any) => a.id - b.id);
+
+        const normalized = sorted.map((c: any) => ({
+          id: c.id,
+          slug: c.slug,
+          name: c.name,
+          metro: c.tags?.find((t: any) => t.category === "METRO")?.name || "—",
+          image: c.images?.[c.images.length - 1]?.imageUrl || "",
+        }));
+
+        setPopularCafes(normalized.slice(0, 4)); // показываем первые 4
+      } catch (err) {
+        console.error("Ошибка загрузки популярных кафе:", err);
+
+        // 🔁 fallback: сортируем моки по id тоже
+        const mock = [...mockCafes]
+          .sort((a, b) => a.id - b.id)
+          .slice(0, 4)
+          .map((c) => ({
+            id: c.id,
+            slug: c.slug,
+            name: c.name,
+            metro: c.tags.find((t) => t.category === "METRO")?.name || "—",
+            image: c.images?.[0]?.imageUrl ?? "",
+          }));
+
+        setPopularCafes(mock);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPopular();
+  }, []);
+
+  if (loading)
+    return (
+      <div className="text-center text-gray-500 py-10">Loading popular cafés...</div>
+    );
 
   return (
     <div className="bg-[#F9F8F5] w-full px-4 md:px-[42px] py-8 md:pb-[128px]">
@@ -20,64 +67,52 @@ export const PopularCafesSection: FC = () => {
           Popular in Kyiv
         </h2>
         <Link
-  to="/catalog"
-  className="
-    font-heading font-medium flex items-center gap-1
-    text-[#21262B] underline justify-self-end mt-[28px]
-    transition-colors duration-200
-    hover:text-[#3D464D]
-    group/link
-  "
->
-  See more
-
-  <div className="relative w-4 h-4 ml-1">
-    {/* короткая стрелка */}
-    <img
-      src={ArrowShort}
-      alt=""
-      className="
-        absolute inset-0 w-4 h-4 transition-opacity duration-200
-        group-hover/link:opacity-0
-        group-hover/link:[filter:invert(25%)_sepia(7%)_saturate(550%)_hue-rotate(160deg)_brightness(95%)_contrast(90%)]
-      "
-    />
-
-    {/* длинная стрелка */}
-    <img
-      src={ArrowLong}
-      alt=""
-      className="
-        absolute inset-0 w-4 h-4 opacity-0 transition-opacity duration-200
-        group-hover/link:opacity-100
-        group-hover/link:[filter:invert(25%)_sepia(7%)_saturate(550%)_hue-rotate(160deg)_brightness(95%)_contrast(90%)]
-      "
-    />
-  </div>
-</Link>
+          to="/catalog"
+          className="
+            font-heading font-medium flex items-center gap-1
+            text-[#21262B] underline justify-self-end mt-[28px]
+            transition-colors duration-200
+            hover:text-[#3D464D]
+            group/link
+          "
+        >
+          See more
+          <div className="relative w-4 h-4 ml-1">
+            <img
+              src={ArrowShort}
+              alt=""
+              className="
+                absolute inset-0 w-4 h-4 transition-opacity duration-200
+                group-hover/link:opacity-0
+                group-hover/link:[filter:invert(25%)_sepia(7%)_saturate(550%)_hue-rotate(160deg)_brightness(95%)_contrast(90%)]
+              "
+            />
+            <img
+              src={ArrowLong}
+              alt=""
+              className="
+                absolute inset-0 w-4 h-4 opacity-0 transition-opacity duration-200
+                group-hover/link:opacity-100
+                group-hover/link:[filter:invert(25%)_sepia(7%)_saturate(550%)_hue-rotate(160deg)_brightness(95%)_contrast(90%)]
+              "
+            />
+          </div>
+        </Link>
       </div>
 
       {/* Сетка кафе */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 justify-items-center max-w-[1440px] mx-auto">
-        {popularCafes.map((cafe) => {
-          // достаём метро через теги
-          const metroTag = cafe.tags.find((t) => t.category === "METRO");
-          const metro = metroTag ? metroTag.name : "—";
+        {popularCafes.map((cafe) => (
+          <CafeCard
+  key={cafe.id}
+  id={cafe.id}
+  slug={cafe.slug}
+  title={cafe.name}
+  metro={cafe.metro}
+  image={cafe.image}
+/>
 
-          // достаём первую картинку
-          const image = cafe.images?.[0]?.imageUrl ?? "";
-
-          return (
-            <CafeCard
-              key={cafe.id}
-              slug={cafe.slug}
-              title={cafe.name}
-              metro={metro}
-              image={image}
-              className="w-full max-w-[300px] mx-auto"
-            />
-          );
-        })}
+        ))}
       </div>
     </div>
   );

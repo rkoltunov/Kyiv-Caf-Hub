@@ -24,12 +24,12 @@ export default function CafesGrid({
   return (
     <>
       {/* Кол-во результатов */}
-      <div className="text-gray-600 font-medium mb-6 text-left">
+      <div className="text-gray-600 px-4 sm:px-8 lg:px-[42px] font-medium mb-6 text-left">
         {filteredItems.length} results
       </div>
 
       {/* Сетка карточек */}
-      <div className="flex justify-center">
+      <div className="flex justify-center px-4 sm:px-8 lg:px-[42px]">
         <div
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-4 justify-items-center w-full max-w-[1440px]"
         >

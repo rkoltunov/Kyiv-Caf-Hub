@@ -8,7 +8,10 @@ export type ImageResponseDto = {
   imageUrl: string;
   altText: string;
 };
-
+export type ImageRequestDto = {
+  imageUrl: string;
+  altText: string;
+};
 // === Tag ===
 export type TagRequestDto = {
   name: string;
@@ -44,31 +47,22 @@ export type CafeRequestDto = {
   address: string;
   latitude: number;
   longitude: number;
-  hours: {
-    weekdays: string;
-    weekend: string;
-  };
+  hours: string;
   tagIds?: number[];
   imageIds?: number[];
 };
 
 export type CafeUpdateRequestDto = {
-  excerpt?: string;
-  description?: string;
-  name?: string;
-  slug?: string;
-  address?: string;
-  latitude?: number;
-  longitude?: number;
-  hours?: {
-    weekdays: string;
-    weekend: string;
-  };
-  tagsIds?: number[];
-  images?: {
-    imageUrl: string;
-    altText: string;
-  }[];
+  name: string;
+  slug: string;
+  excerpt: string;
+  description: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  hours: string;
+  tagIds: number[];
+  imageIds: number[];
 };
 
 export type CafeResponseDto = {
@@ -80,10 +74,7 @@ export type CafeResponseDto = {
   address: string;
   latitude: number;
   longitude: number;
-  hours: {
-    weekdays: string;
-    weekend: string;
-  };
+  hours: string;
   tags: TagResponseDto[];
   images: ImageResponseDto[];
 };

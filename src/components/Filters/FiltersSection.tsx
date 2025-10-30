@@ -122,19 +122,34 @@ export default function FiltersSection({ selectedFilters, onApply, onClear }: Pr
 
   // === RENDER ===
   return (
+    
     <div className="flex flex-wrap gap-3 relative items-center">
       {/* 🖤 Filters кнопка (всегда) */}
       <div className="relative w-full sm:w-auto">
-        <button
-          onClick={() => toggleFilter("Filters")}
-          className={`w-full sm:w-auto flex items-center gap-2 pl-4 pr-5 py-3 border rounded-full font-heading font-medium transition-colors
-            ${openFilter === "Filters"
-              ? "border-black bg-black/90 text-white"
-              : "border-black bg-black text-white hover:bg-black/90"}`}
-        >
-          <img src={FiltersIcon} alt="Filters" className="w-6 h-6" />
-          Filters
-        </button>
+      <button
+  onClick={() => toggleFilter("Filters")}
+  className={`w-full sm:w-auto flex items-center gap-2 pl-4 pr-5 py-3 border rounded-full font-heading font-medium transition-colors relative
+    ${openFilter === "Filters"
+      ? "border-black bg-black/90 text-white"
+      : "border-black bg-black text-white hover:bg-black/90"}`}
+>
+  <img src={FiltersIcon} alt="Filters" className="w-6 h-6" />
+  <span>Filters</span>
+
+  {/* 🔢 счётчик выбранных фильтров */}
+  {hasSelectedFilters && (
+    <span
+      className="flex items-center justify-center bg-white text-black  text-[12px] rounded-full w-6 h-6  -right-5 -top-3 shadow-sm"
+      title="Selected filters count"
+    >
+      {Object.values(pendingFilters).reduce(
+        (acc, arr) => acc + (Array.isArray(arr) ? arr.length : 0),
+        0
+      )}
+    </span>
+  )}
+</button>
+
 
         {openFilter === "Filters" && (
           <DropdownWrapper

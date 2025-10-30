@@ -28,6 +28,13 @@ export default function CatalogPage() {
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [scrolled, setScrolled] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => setScrolled(window.scrollY > 10);
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
 
   // ✅ нормализуем кафе
   const normalizedCafes: Cafe[] = useMemo(
@@ -150,22 +157,28 @@ export default function CatalogPage() {
   };
 
   return (
-    <section className="bg-[#F7F7F7] py-10 sm:py-14 px-4 sm:px-8 lg:px-[42px] rounded-[20px] sm:rounded-[30px]">
+    <section className="bg-[#F7F7F7] py-10 sm:py-14  rounded-[20px] sm:rounded-[30px]">
       {/* Можешь убрать Breadcrumbs, если не нужен */}
-      <Breadcrumbs activeFilters={activeFilters} />
+      <Breadcrumbs />
 
       {/* Фильтры и поиск */}
-      <div className="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 items-start mb-8 sm:mb-10">
-        <FiltersSection
-          selectedFilters={selectedFilters}
-          onApply={handleApplyFilters}
-          onClear={handleClearFilters}
-        />
+      <div
+  className={`sticky top-[80px] z-40 bg-[#F9F8F5] px-4 sm:px-8 lg:px-[42px] transition-shadow duration-300 ${
+    scrolled ? "shadow-[0_4px_4px_rgba(0,0,0,0.05)]" : "shadow-none"
+  }`}
+>
+  <div className="  mb-6 py-4 flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 items-start">
+    <FiltersSection
+      selectedFilters={selectedFilters}
+      onApply={handleApplyFilters}
+      onClear={handleClearFilters}
+    />
 
-        <div className="flex-1 w-full sm:w-auto">
-          <SearchBar query={query} onQueryChange={handleQueryChange} />
-        </div>
-      </div>
+    <div className="flex-1 w-full sm:w-auto">
+      <SearchBar query={query} onQueryChange={handleQueryChange} />
+    </div>
+  </div>
+</div>
 
       <CafesGrid
         visibleItems={visibleItems}
