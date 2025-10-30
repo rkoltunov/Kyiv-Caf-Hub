@@ -30,14 +30,20 @@ export default function CafePage() {
     const loadCafe = async () => {
       try {
         const data = await getCafeById(id);
-        console.log("✅ Cafe from backend:", data);
         setCafe(data);
-      } catch (err) {
-        console.warn("⚠️ API failed:", err);
+      } catch (err: any) {
+        console.warn(`⚠️ Кафе с id=${id} не найдено на бэке, ищем в моках...`);
+
+        // 💾 fallback: ищем кафе в mock-файле
         const mock = mockCafes.find((c) => c.id === id || c.id === (id - 8));
-        console.log("🧩 Mock found:", mock);
-        if (mock) setCafe(mock as CafeResponseDto);
-        else console.error("❌ No cafe found anywhere");
+        if (mock) {
+          console.log(`✅ Найдено мок-кафе: ${mock.name}`);
+          setCafe(mock as CafeResponseDto);
+          return;
+        }
+
+        console.error("❌ Кафе не найдено ни на бэке, ни в моках");
+        navigate("/404", { replace: true });
       } finally {
         setLoading(false);
       }
@@ -58,7 +64,7 @@ export default function CafePage() {
   // ===============================
   // 🚇 Метро и время пешком
   // ===============================
-  const metro = cafe?.tags?.find?.((t) => t.category === "METRO")?.name || "";
+  const metro = cafe.tags.find((t) => t.category === "METRO")?.name || "";
   const metroCoords = metroStationsMock[metro as keyof typeof metroStationsMock];
 
   let timeOnFoot = "";
@@ -79,10 +85,13 @@ export default function CafePage() {
   // ===============================
   // 🏷️ Теги
   // ===============================
-  const servingTags = cafe?.tags?.filter?.((t) => t.category === "MENU")?.map((t) => t.name) ?? [];
-  const servicesTags = cafe?.tags?.filter?.((t) => t.category === "VIBE")?.map((t) => t.name) ?? [];
-  const budget = cafe?.tags?.find?.((t) => t.category === "BUDGET")?.name || "";
-  
+  const servingTags = cafe.tags
+    .filter((t) => t.category === "MENU")
+    .map((t) => t.name);
+  const servicesTags = cafe.tags
+    .filter((t) => t.category === "VIBE")
+    .map((t) => t.name);
+  const budget = cafe.tags.find((t) => t.category === "BUDGET")?.name || "";
 
   // ===============================
   // 💅 Разметка страницы

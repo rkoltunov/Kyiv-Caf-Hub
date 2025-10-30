@@ -14,45 +14,40 @@ export const PopularCafesSection: FC = () => {
   useEffect(() => {
     const loadPopular = async () => {
       try {
-        const res = await api.get("/cafe", { params: { size: 16 } });
-        const data = res.data.content || res.data || [];
-
+        let data: any[] = [];
+  
+        if (import.meta.env.PROD) {
+          // 🟣 В проде (Vercel) берём данные из моков
+          console.warn("⚠️ Using mock cafes for PopularCafesSection (no backend in production)");
+          data = mockCafes;
+        } else {
+          // 🟢 Локально — реальный backend
+          const res = await api.get("/cafe", { params: { size: 16 } });
+          data = res.data.content || res.data || [];
+        }
+  
         // ✅ сортируем по id
         const sorted = [...data].sort((a: any, b: any) => a.id - b.id);
-
+  
         const normalized = sorted.map((c: any) => ({
           id: c.id,
           slug: c.slug,
           name: c.name,
           metro: c.tags?.find((t: any) => t.category === "METRO")?.name || "—",
-          image: c.images?.[c.images.length - 1]?.imageUrl || "",
+          image: c.images?.[0]?.imageUrl || "",
         }));
-
-        setPopularCafes(normalized.slice(0, 4)); // показываем первые 4
+  
+        setPopularCafes(normalized.slice(0, 4)); // первые 4
       } catch (err) {
         console.error("Ошибка загрузки популярных кафе:", err);
-
-        // 🔁 fallback: сортируем моки по id тоже
-        const mock = [...mockCafes]
-          .sort((a, b) => a.id - b.id)
-          .slice(0, 4)
-          .map((c) => ({
-            id: c.id,
-            slug: c.slug,
-            name: c.name,
-            metro: c.tags.find((t) => t.category === "METRO")?.name || "—",
-            image: c.images?.[0]?.imageUrl ?? "",
-          }));
-
-        setPopularCafes(mock);
       } finally {
         setLoading(false);
       }
     };
-
+  
     loadPopular();
   }, []);
-
+  
   if (loading)
     return (
       <div className="text-center text-gray-500 py-10">Loading popular cafés...</div>
