@@ -90,13 +90,17 @@ useEffect(() => {
       if (!options.length) return;
 
       filtered = filtered.filter((it) => {
-        const cafeTags = cafes.find((c) => c.id === it.id)?.tags || [];
+        const cafeMatch = cafes?.find?.((c) => c.id === it.id);
+        const cafeTags = cafeMatch?.tags ?? [];
+      
         if (filterName === "Metro station") {
           return options.includes(it.metro);
         }
+      
         const tagNames = cafeTags.map((t) => t.name);
         return options.some((opt) => tagNames.includes(opt));
       });
+      
     });
 
     return [...filtered].sort((a, b) => a.id - b.id);

@@ -34,7 +34,7 @@ export default function CafePage() {
         console.warn(`⚠️ Кафе с id=${id} не найдено на бэке, ищем в моках...`);
 
         // 💾 fallback: ищем кафе в mock-файле
-        const mock = mockCafes.find((c) => c.id === id || c.id === (id - 8));
+        const mock = mockCafes?.find?.((c) => c.id === id || c.id === id - 8);
         if (mock) {
           console.log(`✅ Найдено мок-кафе: ${mock.name}`);
           setCafe(mock as CafeResponseDto);
@@ -63,7 +63,7 @@ export default function CafePage() {
   // ===============================
   // 🚇 Метро и время пешком
   // ===============================
-  const metro = cafe.tags.find((t) => t.category === "METRO")?.name || "";
+  const metro = cafe?.tags?.find?.((t) => t.category === "METRO")?.name || "";
   const metroCoords = metroStationsMock[metro as keyof typeof metroStationsMock];
 
   let timeOnFoot = "";
@@ -84,13 +84,10 @@ export default function CafePage() {
   // ===============================
   // 🏷️ Теги
   // ===============================
-  const servingTags = cafe.tags
-    .filter((t) => t.category === "MENU")
-    .map((t) => t.name);
-  const servicesTags = cafe.tags
-    .filter((t) => t.category === "VIBE")
-    .map((t) => t.name);
-  const budget = cafe.tags.find((t) => t.category === "BUDGET")?.name || "";
+  const servingTags = cafe?.tags?.filter?.((t) => t.category === "MENU")?.map((t) => t.name) ?? [];
+  const servicesTags = cafe?.tags?.filter?.((t) => t.category === "VIBE")?.map((t) => t.name) ?? [];
+  const budget = cafe?.tags?.find?.((t) => t.category === "BUDGET")?.name || "";
+  
 
   // ===============================
   // 💅 Разметка страницы
