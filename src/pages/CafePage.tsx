@@ -29,20 +29,14 @@ export default function CafePage() {
     const loadCafe = async () => {
       try {
         const data = await getCafeById(id);
+        console.log("✅ Cafe from backend:", data);
         setCafe(data);
-      } catch (err: any) {
-        console.warn(`⚠️ Кафе с id=${id} не найдено на бэке, ищем в моках...`);
-
-        // 💾 fallback: ищем кафе в mock-файле
-        const mock = mockCafes?.find?.((c) => c.id === id || c.id === id - 8);
-        if (mock) {
-          console.log(`✅ Найдено мок-кафе: ${mock.name}`);
-          setCafe(mock as CafeResponseDto);
-          return;
-        }
-
-        console.error("❌ Кафе не найдено ни на бэке, ни в моках");
-        navigate("/404", { replace: true });
+      } catch (err) {
+        console.warn("⚠️ API failed:", err);
+        const mock = mockCafes.find((c) => c.id === id || c.id === (id - 8));
+        console.log("🧩 Mock found:", mock);
+        if (mock) setCafe(mock as CafeResponseDto);
+        else console.error("❌ No cafe found anywhere");
       } finally {
         setLoading(false);
       }
