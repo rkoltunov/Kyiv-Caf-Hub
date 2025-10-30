@@ -83,7 +83,7 @@ export default function BlogCategoryPage() {
             "block px-4 p-2 lg:px-1 lg:py-1 rounded-full border lg:border-0 transition-colors font-bold",
             isActive
               ? "bg-[#C6B0E7] text-black lg:bg-transparent lg:text-black underline decoration-2 underline-offset-4"
-              : "bg-white lg:bg-transparent rounded-full lg:rounded-[30px] border lg:border-0 font-bold hover:bg-[#eadffa] hover:text-black transition",
+              : "bg-white lg:bg-transparent rounded-full lg:rounded-[30px] border lg:border-0 font-bold hover:text-[#C6B0E7]  transition",
           ]
             .filter(Boolean)
             .join(" ")

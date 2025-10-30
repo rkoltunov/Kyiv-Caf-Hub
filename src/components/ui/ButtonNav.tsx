@@ -8,8 +8,14 @@ type ButtonNavProps = {
 };
 
 export const ButtonNav: FC<ButtonNavProps> = ({ to, label, className = "" }) => {
-  const location = useLocation();
-  const isActive = location.pathname === to;
+  const { pathname } = useLocation();
+
+  // 🔹 Логика активного состояния:
+  const isActive =
+    (to === "/" && pathname === "/") ||
+    (to === "/catalog" && (pathname.startsWith("/catalog") || pathname.startsWith("/cafe"))) ||
+    (to === "/blog" && pathname.startsWith("/blog")) ||
+    (to === "/about" && pathname.startsWith("/about"));
 
   return (
     <Link

@@ -2,21 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ButtonNav } from "../ui/ButtonNav";
 
-import HomeIcon from "../../assets/home/nav/homedefault.svg";
-import HomeActiveIcon from "../../assets/home/nav/homea.svg";
-import HomeHoverIcon from "../../assets/home/nav/homehover.svg";
 
-import CatalogIcon from "../../assets/home/nav/catalogdefault.svg";
-import CatalogActiveIcon from "../../assets/home/nav/cataloga.svg";
-import CatalogHoverIcon from "../../assets/home/nav/cataloghover.svg";
-
-import BlogIcon from "../../assets/home/nav/blogdefault.svg";
-import BlogActiveIcon from "../../assets/home/nav/bloga.svg";
-import BlogHoverIcon from "../../assets/home/nav/bloghover.svg";
-
-import AboutIcon from "../../assets/home/nav/aboutdefault.svg";
-import AboutActiveIcon from "../../assets/home/nav/abouta.svg";
-import AboutHoverIcon from "../../assets/home/nav/abouthover.svg";
 
 export const Header = () => {
   const [isAdmin] = useState(false);

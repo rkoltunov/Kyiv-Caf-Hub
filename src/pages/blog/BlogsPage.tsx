@@ -63,7 +63,7 @@ export default function BlogPage() {
     <li key={cat}>
       <Link
         to={`/blog/category/${cat.toLowerCase().replace(/\s+/g, "-")}`}
-        className="block px-4 p-2 lg:px-1 lg:py-1 bg-white lg:bg-transparent rounded-[30px] border lg:border-0 font-bold hover:bg-[#eadffa] hover:text-black transition"
+        className="block px-4 p-2 lg:px-1 lg:py-1 bg-white lg:bg-transparent rounded-[30px] border lg:border-0 font-bold hover:text-[#C6B0E7]  transition"
       >
         {cat}
       </Link>
