@@ -214,17 +214,16 @@ export const DropdownWrapper: React.FC<Props> = ({
           if (contentRef && "current" in contentRef)
             (contentRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
         }}
-        className="flex-1  p-6 pb-4 overflow-y-auto border-t border-gray-300"
+        className="flex-1 p-6 overflow-y-auto border-t border-gray-300"
       >
         {children}
       </div>
 
-      <div>{footer && (
-        <div className="h-[80px] px-6 py-4 bg-[#F7F7F7] border-t border-black sticky bottom-0 z-10">
+      {footer && (
+        <div className="h-[810px] px-6 py-4 bg-[#F7F7F7] border-t border-black sticky bottom-0 z-10">
           {footer}
         </div>
       )}
-      </div>
     </div>
   );
 };

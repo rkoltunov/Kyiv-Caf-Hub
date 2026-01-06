@@ -21,10 +21,10 @@ export const StationsGroup: React.FC<Props> = ({
   const hidden = stations.length - 4;
 
   return (
-    <div className="mb-2">
+    <div className="">
 <button
   onClick={() => toggleSection(line)}
-  className="flex justify-between items-start text-left text-[#3D464D] w-full text-lg font-semibold pt-4 pl-4"
+  className="flex justify-between items-start text-left text-[#3D464D] w-full text-lg font-semibold pl-4 p-4 pt-2"
 >
 
         <span>{line}</span>

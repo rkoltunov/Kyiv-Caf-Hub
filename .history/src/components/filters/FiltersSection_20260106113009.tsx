@@ -192,7 +192,7 @@ export default function FiltersSection({
               ))}
             </>
           ) : (
-            <div className="grid grid-cols-2 gap-4 pb-4">
+            <div className="grid grid-cols-2 gap-4">
               {whiteFilters[filterName].map(option => (
                 <CustomCheckbox
                   key={option}
@@ -203,8 +203,7 @@ export default function FiltersSection({
               ))}
             </div>
           )}
-  <div className="border-t border-black -mx-6" />
-  <div className="flex items-center justify-between pt-4">
+<div className="flex items-center justify-between mt-6 pt-4 border-t border-black">
 
 {/* Clear All — слева */}
 <button

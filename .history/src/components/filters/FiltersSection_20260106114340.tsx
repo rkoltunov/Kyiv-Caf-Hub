@@ -192,7 +192,7 @@ export default function FiltersSection({
               ))}
             </>
           ) : (
-            <div className="grid grid-cols-2 gap-4 pb-4">
+            <div className="grid grid-cols-2 gap-4 ">
               {whiteFilters[filterName].map(option => (
                 <CustomCheckbox
                   key={option}

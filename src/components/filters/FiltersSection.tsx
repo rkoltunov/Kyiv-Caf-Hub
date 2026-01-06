@@ -192,7 +192,7 @@ export default function FiltersSection({
               ))}
             </>
           ) : (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 pb-4">
               {whiteFilters[filterName].map(option => (
                 <CustomCheckbox
                   key={option}
@@ -203,12 +203,13 @@ export default function FiltersSection({
               ))}
             </div>
           )}
-<div className="flex items-center justify-between mt-6 pt-4 border-t ">
+  <div className="border-t border-black -mx-6" />
+  <div className="flex items-center justify-between pt-4">
 
 {/* Clear All — слева */}
 <button
   onClick={handleClear}
-  className="text-[16px] font-bold  "
+  className="text-[16px] font-heading  "
 >
   Clear All
 </button>
@@ -220,7 +221,7 @@ export default function FiltersSection({
 <div className="flex-1 flex justify-end">
   <button
     onClick={() => handleApply(filterName)}
-    className="px-8 py-3 bg-black text-white rounded-full font-heading font-medium w-[228px]"
+    className="w-full py-3 bg-black text-white rounded-full font-heading font-medium "
   >
     Apply
   </button>
@@ -251,12 +252,12 @@ export default function FiltersSection({
           footer={
             totalSelected > 0 ? (
               <div className="flex justify-between gap-4">
-                <button onClick={handleClear} className="text-black font-heading font-medium">
+                <button onClick={handleClear} className="text-black font-heading font-medium w-[120px]">
                   Clear filters
                 </button>
                 <button
                   onClick={() => handleApply("Filters")}
-                  className="px-8 py-3 bg-black text-white rounded-full font-heading font-medium"
+                  className="w-full py-3 bg-black text-white rounded-full font-heading font-medium"
                 >
                   Apply
                 </button>
@@ -364,12 +365,12 @@ export default function FiltersSection({
           footer={
             totalSelected > 0 ? (
               <div className="flex justify-between gap-4">
-                <button onClick={handleClear} className="text-black font-heading font-medium">
+                <button onClick={handleClear} className="text-black font-heading font-medium w-[120px]">
                   Clear filters
                 </button>
                 <button
                   onClick={() => handleApply("Filters")}
-                  className="px-8 py-3 bg-black text-white rounded-full font-heading font-medium"
+                  className="w-full py-3 bg-black text-white rounded-full font-heading font-medium"
                 >
                   Apply
                 </button>
@@ -485,12 +486,12 @@ export default function FiltersSection({
               footer={
                 totalSelected > 0 ? (
                   <div className="flex justify-between gap-4">
-                    <button onClick={handleClear} className="text-black font-heading font-medium">
+                    <button onClick={handleClear} className="text-black font-heading font-medium w-[120px]">
                       Clear filters
                     </button>
                     <button
                       onClick={() => handleApply("Filters")}
-                      className="px-8 py-3 bg-black text-white rounded-full font-heading font-medium"
+                      className="w-full py-3 bg-black text-white rounded-full font-heading font-medium"
                     >
                       Apply
                     </button>

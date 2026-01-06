@@ -192,7 +192,7 @@ export default function FiltersSection({
               ))}
             </>
           ) : (
-            <div className="grid grid-cols-2 gap-4 pb-4">
+            <div className="grid grid-cols-2 gap-4">
               {whiteFilters[filterName].map(option => (
                 <CustomCheckbox
                   key={option}
@@ -203,8 +203,7 @@ export default function FiltersSection({
               ))}
             </div>
           )}
-  <div className="border-t border-black -mx-6" />
-  <div className="flex items-center justify-between pt-4">
+<div className="flex items-center justify-between mt-6 pt-4 border-t ">
 
 {/* Clear All — слева */}
 <button
@@ -252,7 +251,7 @@ export default function FiltersSection({
           footer={
             totalSelected > 0 ? (
               <div className="flex justify-between gap-4">
-                <button onClick={handleClear} className="text-black font-heading font-medium w-[120px]">
+                <button onClick={handleClear} className="text-black font-heading font-medium">
                   Clear filters
                 </button>
                 <button
@@ -365,12 +364,12 @@ export default function FiltersSection({
           footer={
             totalSelected > 0 ? (
               <div className="flex justify-between gap-4">
-                <button onClick={handleClear} className="text-black font-heading font-medium w-[120px]">
+                <button onClick={handleClear} className="text-black font-heading font-medium">
                   Clear filters
                 </button>
                 <button
                   onClick={() => handleApply("Filters")}
-                  className="w-full py-3 bg-black text-white rounded-full font-heading font-medium"
+                  className="px-8 py-3 bg-black text-white rounded-full font-heading font-medium"
                 >
                   Apply
                 </button>
@@ -486,12 +485,12 @@ export default function FiltersSection({
               footer={
                 totalSelected > 0 ? (
                   <div className="flex justify-between gap-4">
-                    <button onClick={handleClear} className="text-black font-heading font-medium w-[120px]">
+                    <button onClick={handleClear} className="text-black font-heading ">
                       Clear filters
                     </button>
                     <button
                       onClick={() => handleApply("Filters")}
-                      className="w-full py-3 bg-black text-white rounded-full font-heading font-medium"
+                      className="px-8 py-3 bg-black text-white rounded-full font-heading font-medium"
                     >
                       Apply
                     </button>

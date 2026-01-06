@@ -24,7 +24,7 @@ export const StationsGroup: React.FC<Props> = ({
     <div className="">
 <button
   onClick={() => toggleSection(line)}
-  className="flex justify-between items-start text-left text-[#3D464D] w-full text-lg font-semibold pl-4 p-4 pt-2"
+  className="flex justify-between items-start text-left text-[#3D464D] w-full text-lg font-semibold pl-4 p-4 pt-1"
 >
 
         <span>{line}</span>

@@ -214,7 +214,7 @@ export const DropdownWrapper: React.FC<Props> = ({
           if (contentRef && "current" in contentRef)
             (contentRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
         }}
-        className="flex-1  p-6 pb-4 overflow-y-auto border-t border-gray-300"
+        className="flex-1  poverflow-y-auto border-t border-gray-300"
       >
         {children}
       </div>
