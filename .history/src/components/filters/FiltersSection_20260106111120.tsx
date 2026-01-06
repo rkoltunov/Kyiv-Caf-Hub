@@ -340,7 +340,7 @@ export default function FiltersSection({
 
 {/* ПЛАНШЕТ */}
 {screenSize === "tablet" && (
-  <div className="space-y-5 w-[690px]">
+  <div className="space-y-5 w-[76px]">
     <div className="flex items-center gap-4 relative">
       <FiltersButton />
 
