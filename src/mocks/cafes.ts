@@ -22,37 +22,13 @@ import SeredaRight from "../assets/home/cafepage/seredaright.png";
 
 // 👇 Моковые данные для разработки
 const mockCafes: CafeResponseDto[] = [
-  {
-    id: 4,
-    name: "Sereda Vegan Point",
-    excerpt: "Cozy vegan café in Podil",
-    description: "Sereda Vegan Point is a cosy vegan café in Podil, where healthy eating is combined with a love of flavour. Here you will find freshly roasted coffee, vegan desserts and even sweets for diabetics, as well as a warm atmosphere that makes every visit special.",
-    slug: "sereda-vegan-point",
-    address: "Nyzhnii Val Street, 39, Kyiv",
-    latitude: 50.4684,
-    longitude: 30.5151,
-    hours: "Mon-Fri from 10:00 AM to 8:00 PM; Sat-Sun from 11:00 AM to 9:00 PM",
-    tags: [
-      { id: 1, name: "Kontraktova Ploshcha", slug: "kontraktova-ploshcha", category: "METRO" },
-      { id: 2, name: "Cozy for meetings", slug: "cozy-for-meetings", category: "VIBE" },
-      { id: 3, name: "Alternative milk available", slug: "alt-milk", category: "MENU" },
-      { id: 4, name: "Vegan desserts", slug: "vegan-desserts", category: "MENU" },
-      { id: 5, name: "Sugar-free desserts", slug: "sugar-free-desserts", category: "MENU" },
-      { id: 6, name: "Accessibility", slug: "accessibility", category: "ACCESSIBILITY" },
-      { id: 7, name: "Free Wi-Fi", slug: "free-wifi", category: "ACCESSIBILITY" },
-      { id: 8, name: "$$$", slug: "budget-3", category: "BUDGET" }
-    ],
-    images: [{ id: 1, imageUrl: Sereda, altText: "Main photo" },
-      { id: 2, imageUrl: SeredaSmall1, altText: "Small photo 1" },
-      { id: 3, imageUrl: SeredaSmall2, altText: "Small photo 2" },
-      { id: 4, imageUrl: SeredaRight, altText: "Right photo" },],
-  },
+
   {
     id: 1,
     name: "Teddy Bar Cafe",
     excerpt: "Modern café with excellent coffee",
     description: "Teddy Bar Cafe is a bright pink coffee shop near the Slavutych metro station, where all the walls are covered with teddy bears, creating a cosy and cute atmosphere. It is the perfect place for incredible photos, where stylish design is combined with delicious coffee and an original cocktail menu.",
-    slug: "coffee-hub",
+slug: "teddy-bar-cafe",
     address: "21a Tsentralna Street, building 2, Kyiv",
     latitude: 50.4836, 
     longitude: 30.4005,
@@ -71,35 +47,11 @@ const mockCafes: CafeResponseDto[] = [
     ]
   },
   {
-    id: 3,
-    name: "Cafe Marko",
-    excerpt: "Small cozy corner for coffee lovers",
-    description: "Barista Corner offers a wide variety of coffee and tea in a homely atmosphere, perfect for quiet afternoons.",
-    slug: "barista-corner",
-    address: "Bohdana Khmelnytskoho Street, 14, Kyiv",
-    latitude: 50.4444,
-    longitude: 30.5180,
-    hours:"Mon-Fri 09:00-19:00; Sat-Sun 10:00-18:00",
-    tags: [
-      { id: 17, name: "Maidan Nezalezhnosti", slug: "maidan", category: "METRO" },
-      { id: 18, name: "Kid-friendly", slug: "kid-friendly", category: "VIBE" },
-      { id: 19, name: "Instagrammable", slug: "instagrammable", category: "VIBE" },
-      { id: 20, name: "Matcha", slug: "matcha", category: "MENU" },
-      { id: 21, name: "Sugar-free desserts", slug: "sugar-free-desserts", category: "MENU" },
-      { id: 22, name: "Outdoor seating", slug: "outdoor-seating", category: "ACCESSIBILITY" },
-      { id: 23, name: "Free Wi-Fi", slug: "free-wifi", category: "ACCESSIBILITY" },
-      { id: 24, name: "$", slug: "budget-1", category: "BUDGET" }
-    ],
-    images: [
-      { id: 4, imageUrl: Photo3, altText: "Barista Corner" }
-    ]
-  },
-  {
     id: 2,
     name: "DOT. MATCHA BAR & COFFEE",
     excerpt: "Relaxed vibe and great lattes",
     description: "DOT. MATCHA BAR & COFFEE is a bright spot for matcha lovers in the city centre, where every drink and dessert creates a mood. Here, a stylish atmosphere is combined with a creative menu, and matcha sweets and drinks made with alternative milk become a real ritual of energy and inspiration.",
-    slug: "latte-lounge",
+slug: "dot-matcha-bar-coffee",
     address: "1/2 Baseina Street, Kyiv",
     latitude: 50.4417, 
     longitude: 30.5224,
@@ -119,6 +71,56 @@ const mockCafes: CafeResponseDto[] = [
       { id: 7, imageUrl: MatchaSmall2, altText: "Latte Lounge" },
       { id: 8, imageUrl: MatchaRight, altText: "Latte Lounge" }
     ]
+  },
+  {
+    id: 3,
+    name: "Cafe Marko",
+    excerpt: "Small cozy corner for coffee lovers",
+    description: "Barista Corner offers a wide variety of coffee and tea in a homely atmosphere, perfect for quiet afternoons.",
+slug: "cafe-marko",
+    address: "Bohdana Khmelnytskoho Street, 14, Kyiv",
+    latitude: 50.4444,
+    longitude: 30.5180,
+    hours:"Mon-Fri 09:00-19:00; Sat-Sun 10:00-18:00",
+    tags: [
+      { id: 17, name: "Maidan Nezalezhnosti", slug: "maidan", category: "METRO" },
+      { id: 18, name: "Kid-friendly", slug: "kid-friendly", category: "VIBE" },
+      { id: 19, name: "Instagrammable", slug: "instagrammable", category: "VIBE" },
+      { id: 20, name: "Matcha", slug: "matcha", category: "MENU" },
+      { id: 21, name: "Sugar-free desserts", slug: "sugar-free-desserts", category: "MENU" },
+      { id: 22, name: "Outdoor seating", slug: "outdoor-seating", category: "ACCESSIBILITY" },
+      { id: 23, name: "Free Wi-Fi", slug: "free-wifi", category: "ACCESSIBILITY" },
+      { id: 24, name: "$", slug: "budget-1", category: "BUDGET" }
+    ],
+    images: [
+      { id: 4, imageUrl: Photo3, altText: "Barista Corner" }
+    ]
+  },
+
+  {
+    id: 4,
+    name: "Sereda Vegan Point",
+    excerpt: "Cozy vegan café in Podil",
+    description: "Sereda Vegan Point is a cosy vegan café in Podil, where healthy eating is combined with a love of flavour. Here you will find freshly roasted coffee, vegan desserts and even sweets for diabetics, as well as a warm atmosphere that makes every visit special.",
+slug: "sereda-vegan-point",
+    address: "Nyzhnii Val Street, 39, Kyiv",
+    latitude: 50.4684,
+    longitude: 30.5151,
+    hours: "Mon-Fri from 10:00 AM to 8:00 PM; Sat-Sun from 11:00 AM to 9:00 PM",
+    tags: [
+      { id: 1, name: "Kontraktova Ploshcha", slug: "kontraktova-ploshcha", category: "METRO" },
+      { id: 2, name: "Cozy for meetings", slug: "cozy-for-meetings", category: "VIBE" },
+      { id: 3, name: "Alternative milk available", slug: "alt-milk", category: "MENU" },
+      { id: 4, name: "Vegan desserts", slug: "vegan-desserts", category: "MENU" },
+      { id: 5, name: "Sugar-free desserts", slug: "sugar-free-desserts", category: "MENU" },
+      { id: 6, name: "Accessibility", slug: "accessibility", category: "ACCESSIBILITY" },
+      { id: 7, name: "Free Wi-Fi", slug: "free-wifi", category: "ACCESSIBILITY" },
+      { id: 8, name: "$$$", slug: "budget-3", category: "BUDGET" }
+    ],
+    images: [{ id: 1, imageUrl: Sereda, altText: "Main photo" },
+      { id: 2, imageUrl: SeredaSmall1, altText: "Small photo 1" },
+      { id: 3, imageUrl: SeredaSmall2, altText: "Small photo 2" },
+      { id: 4, imageUrl: SeredaRight, altText: "Right photo" },],
   },
   {
     id: 5,

@@ -5,7 +5,7 @@ import ArrowShort from "../../assets/icons/arrow-right_16.svg";
 import ArrowLong from "../../assets/icons/arrow-right_long_16.svg";
 
 type CafeCardProps = {
-  id: number;       // ← теперь обязательный, чтобы URL был корректный
+  id: number;
   slug: string;
   title: string;
   metro?: string;
@@ -22,87 +22,98 @@ export const CafeCard: FC<CafeCardProps> = ({
   image,
   className = "",
 }) => {
-  // 🧩 формируем красивый URL с id + slug
   const cafeUrl = `/cafe/${id}-${slug}`;
 
   return (
-    <Card
-      className={`
-        group flex flex-col p-0
-        w-full max-w-[300px] sm:max-w-[327px]
-        bg-[#F9F8F5]
-        border border-transparent
-        transition-all duration-300 ease-in-out
-        ${className}
-      `}
-    >
-      {/* Фото (кликабельно) */}
-      <Link
-        to={cafeUrl} // ✅ заменили
-        className="relative w-full aspect-[4/5] mb-4 border border-gray-300 rounded-[12px] p-4 block overflow-hidden hover:bg-white hover:shadow-[4px_3px_0_#21262B]"
+    <>
+      {/* ================= DESKTOP ≥1280px ================= */}
+      <Card
+        className={`
+          hidden xl:flex flex-col p-0
+          w-full max-w-[327px]          /* Жёсткий лимит для десктопа */
+          mx-auto                       /* центрируем, если ячейка шире */
+          bg-[#F9F8F5]
+          border border-transparent
+          transition-all duration-300
+          ${className}
+        `}
       >
-        <div className="w-full h-full rounded-[8px] overflow-hidden">
-          <img
-            src={image}
-            alt={title}
-            className="
-              w-full h-full object-cover
-              transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
-              group-hover:scale-105
-            "
-          />
-        </div>
-      </Link>
-
-      {/* Контент */}
-      <div className="flex flex-col flex-1 px-4 pb-4">
-        {/* Метро */}
-        {metro && (
-          <div className="mb-2">
-            <span className="inline-block px-3 rounded-[8px] text-gray-700 border border-gray-300 font-medium">
-              {metro}
-            </span>
-          </div>
-        )}
-
-        {/* Название */}
-        <h3 className="font-semibold text-lg md:text-xl mb-4">{title}</h3>
-
-        {/* Кнопка */}
-        <Link to={cafeUrl} className="flex justify-start group/link">
-          <div
-            className="
-              flex items-center gap-1
-              text-[#21262B]
-              transition-colors duration-200
-              hover:text-[#3D464D]
-            "
-          >
-            <span
-              className="
-                font-heading font-medium underline decoration-2 underline-offset-4
-                transition-colors duration-200
-              "
-            >
-              See cafe
-            </span>
-
-            {/* Стрелка через иконки */}
-            <div className="relative w-[16px] h-[16px]">
-              <img
-                src={ArrowShort}
-                alt=""
-                className="absolute inset-0 w-[16px] h-[16px] transition-opacity duration-200 group-hover/link:opacity-0"
-              />
-              <img
-                src={ArrowLong}
-                alt=""
-                className="absolute inset-0 w-[16px] h-[16px] opacity-0 transition-opacity duration-200 group-hover/link:opacity-100 group-hover/link:[filter:invert(25%)_sepia(7%)_saturate(550%)_hue-rotate(160deg)_brightness(95%)_contrast(90%)]"
-              />
-            </div>
+        {/* Фото */}
+        <Link
+          to={cafeUrl}
+          className="relative w-full aspect-[4/5] mb-4 border border-gray-300 rounded-[12px] p-4 block overflow-hidden hover:bg-white hover:shadow-[4px_3px_0_#21262B] transition-all"
+        >
+          <div className="w-full h-full rounded-[8px] overflow-hidden">
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
           </div>
         </Link>
-      </div>
-    </Card>
+
+        {/* Контент — растягивается, кнопка всегда внизу */}
+        <div className="flex flex-col flex-1 px-4  min-h-0">
+          {metro && (
+            <div className="mb-2">
+              <span className="inline-block px-3 py-1 rounded-[8px] text-gray-700 border border-gray-300 font-medium text-sm">
+                {metro}
+              </span>
+            </div>
+          )}
+
+          <h3 className="font-semibold text-lg md:text-xl mb-4 line-clamp-2">
+            {title}
+          </h3>
+
+          {/* Кнопка всегда внизу */}
+          <Link to={cafeUrl} className="mt-auto flex justify-start group/link">
+            <div className="flex items-center gap-1 text-[#21262B] hover:text-[#3D464D] transition-colors">
+              <span className="font-heading font-medium underline decoration-2 underline-offset-4">
+                See cafe
+              </span>
+              <div className="relative w-[16px] h-[16px]">
+                <img src={ArrowShort} alt="" className="absolute inset-0 opacity-100 group-hover/link:opacity-0 transition-opacity" />
+                <img src={ArrowLong} alt="" className="absolute inset-0 opacity-0 group-hover/link:opacity-100 transition-opacity" />
+              </div>
+            </div>
+          </Link>
+        </div>
+      </Card>
+
+      {/* ================= MOBILE + TABLET <1280px ================= */}
+      <Link
+        to={cafeUrl}
+        className={`
+          xl:hidden block
+          w-full
+          max-w-[343px]           /* мобильный */
+          sm:max-w-[334px]        /* планшет */
+          mx-auto                 /* центрируем карточку в ячейке */
+          rounded-[20px] bg-[#F9F8F5] border border-gray-300
+          overflow-hidden transition-all active:scale-[0.98]
+          ${className}
+        `}
+      >
+        <div className="p-4">
+          <div className="w-full h-[350px] rounded-[12px] overflow-hidden border border-gray-300">
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          <div className="mt-4">
+            {metro && (
+              <span className="inline-block mb-2 px-3 py-[2px] rounded-[8px] text-gray-700 border border-gray-300 font-medium text-sm">
+                {metro}
+              </span>
+            )}
+            <h3 className="font-semibold text-lg line-clamp-2">{title}</h3>
+          </div>
+        </div>
+      </Link>
+    </>
   );
 };

@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
-import api from "../../api";
-import type {
-  CafeResponseDto,
-  CafeRequestDto,
-} from "../../types/dto";
-import { useStore } from "../../app/store";
+import api from "../../../api";
+import type { CafeResponseDto, CafeRequestDto } from "../../../types/dto";
+import { useStore } from "../../../app/store";
 import TagSelector from "./TagSelector";
-import ImageSelector from "./ImageSelector";
+import ImageSelector from "../ImageSelector";
 
 // 🔤 Генерация slug
 const generateSlug = (text: string) =>
@@ -35,7 +32,7 @@ export default function AdminCafesPage() {
     imageIds: [],
   });
 
-  const token = useStore((s) => s.token);
+  const token = useStore(s => s.token);
 
   // ==============================
   // 🔄 Загрузка кафе
@@ -62,7 +59,7 @@ export default function AdminCafesPage() {
   // ==============================
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setForm((prev) => ({
+    setForm(prev => ({
       ...prev,
       [name]: value,
       slug: name === "name" ? generateSlug(value) : prev.slug,
@@ -75,13 +72,11 @@ export default function AdminCafesPage() {
   const handleAddressBlur = async () => {
     if (!form.address.trim()) return;
     try {
-      const res = await fetch(
-        `/geocode/search?format=json&q=${encodeURIComponent(form.address)}`
-      );
-      
+      const res = await fetch(`/geocode/search?format=json&q=${encodeURIComponent(form.address)}`);
+
       const data = await res.json();
       if (data?.[0]) {
-        setForm((prev) => ({
+        setForm(prev => ({
           ...prev,
           latitude: parseFloat(parseFloat(data[0].lat).toFixed(4)),
           longitude: parseFloat(parseFloat(data[0].lon).toFixed(4)),
@@ -106,7 +101,7 @@ export default function AdminCafesPage() {
       const res = await api.post("/cafe", payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setCafes((prev) => [...prev, res.data]);
+      setCafes(prev => [...prev, res.data]);
       resetForm();
     } catch (err: any) {
       alert(err?.response?.data?.message ?? "❌ Ошибка при добавлении кафе");
@@ -127,8 +122,8 @@ export default function AdminCafesPage() {
       latitude: cafe.latitude,
       longitude: cafe.longitude,
       hours: cafe.hours,
-      tagIds: cafe.tags?.map((t) => t.id) || [],
-      imageIds: cafe.images?.map((i) => i.id) || [],
+      tagIds: cafe.tags?.map(t => t.id) || [],
+      imageIds: cafe.images?.map(i => i.id) || [],
     });
   };
 
@@ -138,9 +133,7 @@ export default function AdminCafesPage() {
       const res = await api.put(`/cafe/${editing.id}`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setCafes((prev) =>
-        prev.map((c) => (c.id === editing.id ? res.data : c))
-      );
+      setCafes(prev => prev.map(c => (c.id === editing.id ? res.data : c)));
       setEditing(null);
       resetForm();
     } catch (err: any) {
@@ -157,7 +150,7 @@ export default function AdminCafesPage() {
       await api.delete(`/cafe/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setCafes((prev) => prev.filter((c) => c.id !== id));
+      setCafes(prev => prev.filter(c => c.id !== id));
     } catch {
       alert("Ошибка при удалении");
     }
@@ -201,7 +194,6 @@ export default function AdminCafesPage() {
           <input
             name="slug"
             value={form.slug}
-            readOnly
             className="border p-3 rounded-lg w-full bg-gray-100"
           />
         </div>
@@ -277,13 +269,13 @@ export default function AdminCafesPage() {
         </div>
 
         <TagSelector
-  selectedIds={form.tagIds ?? []}
-          setSelectedIds={(ids) => setForm((p) => ({ ...p, tagIds: ids }))}
+          selectedIds={form.tagIds ?? []}
+          setSelectedIds={ids => setForm(p => ({ ...p, tagIds: ids }))}
         />
 
         <ImageSelector
-  selectedIds={form.imageIds ?? []}
-          setSelectedIds={(ids) => setForm((p) => ({ ...p, imageIds: ids }))}
+          selectedIds={form.imageIds ?? []}
+          setSelectedIds={ids => setForm(p => ({ ...p, imageIds: ids }))}
         />
 
         <div className="flex gap-3 pt-4">
@@ -306,10 +298,7 @@ export default function AdminCafesPage() {
               </button>
             </>
           ) : (
-            <button
-              onClick={handleAddCafe}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-            >
+            <button onClick={handleAddCafe} className="bg-blue-600 text-white px-4 py-2 rounded-lg">
               Add Cafe
             </button>
           )}
@@ -327,7 +316,7 @@ export default function AdminCafesPage() {
           </tr>
         </thead>
         <tbody>
-          {cafes.map((cafe) => (
+          {cafes.map(cafe => (
             <tr key={cafe.id} className="hover:bg-gray-50">
               <td className="p-3 border-b">{cafe.id}</td>
               <td className="p-3 border-b font-medium">{cafe.name}</td>

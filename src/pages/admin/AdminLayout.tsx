@@ -27,15 +27,15 @@ export default function AdminLayout() {
 
 
         <NavLink
-  to="/admin/addimage"
+  to="/admin/blogs"
   className={({ isActive }) =>
     `block py-2 px-3 rounded-md mb-2 ${isActive ? "bg-black text-white" : "hover:bg-gray-100"}`
   }
 >
-Add image
+Blogs
         </NavLink>
         <NavLink
-  to="/admin/addtag"
+  to="/admin/blogs"
   className={({ isActive }) =>
     `block py-2 px-3 rounded-md mb-2 ${isActive ? "bg-black text-white" : "hover:bg-gray-100"}`
   }
