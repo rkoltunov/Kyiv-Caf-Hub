@@ -11,12 +11,10 @@ import NotFoundPage from "../pages/NotFoundPage";
 import { MainLayout } from "../components/layout/MainLayout";
 
 import AdminLoginPage from "../pages/admin/AdminLoginPage";
-import AdminCafesPage from "../pages/admin/AdminCafesPage";
+import AdminCafesPage from "../pages/admin/AdminCafesPage/AdminCafesPage";
 import PrivateRoute from "../components/PrivateRoute";
 import AdminLayout from "../pages/admin/AdminLayout";
-import AdminAddImagePage from "../pages/admin/AdminAddImagePage";
-import AdminAddTagPage from "../pages/admin/AdminAddTagPage";
-
+import AdminBlogsPage from "../pages/admin/AdminBlogsPage/AdminBlogsPage";
 // добавим layout
 
 export const router = createBrowserRouter([
@@ -46,12 +44,14 @@ export const router = createBrowserRouter([
 
       // 🔐 Закрытые маршруты
       {
-        element: <PrivateRoute><AdminLayout /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <AdminLayout />
+          </PrivateRoute>
+        ),
         children: [
           { path: "cafes", element: <AdminCafesPage /> },
-          { path: "addtag", element: <AdminAddTagPage /> },
-          { path: "addimage", element: <AdminAddImagePage /> },
-
+          { path: "blogs", element: <AdminBlogsPage /> },
         ],
       },
     ],

@@ -18,19 +18,24 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const setToken = useStore((s) => s.setToken);
+  const setAdminMode = useStore((s) => s.setAdminMode); // 🟣 добавили
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
     try {
       const data = await login(email, password);
-      // ожидаем token в data.token или data (если прям вернули строку)
       const token = data?.token ?? (typeof data === "string" ? data : null);
       if (!token) {
         throw new Error("Token not returned by server");
       }
+
+      // ✅ теперь явно ставим режим админки
+      setAdminMode(true);
       setToken(token);
+
       navigate("/admin/cafes");
     } catch (err) {
       setError("Неверный email или пароль");
@@ -39,7 +44,10 @@ export default function AdminLoginPage() {
 
   return (
     <div className="flex h-screen items-center justify-center bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md"
+      >
         <h1 className="text-2xl font-bold mb-6 text-center">Вход в админку</h1>
 
         <input
@@ -47,7 +55,7 @@ export default function AdminLoginPage() {
           placeholder="Email"
           className="w-full mb-3 p-3 border rounded-lg"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
@@ -55,7 +63,7 @@ export default function AdminLoginPage() {
           placeholder="Пароль"
           className="w-full mb-4 p-3 border rounded-lg"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         {error && <p className="text-red-600 text-center mb-4">{error}</p>}

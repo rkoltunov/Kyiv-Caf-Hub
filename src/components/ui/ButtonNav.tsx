@@ -1,10 +1,11 @@
 import type { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-type ButtonNavProps = {
+export type ButtonNavProps = {
   to: string;
   label: string;
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>; // ✅ добавили
 };
 
 export const ButtonNav: FC<ButtonNavProps> = ({ to, label, className = "" }) => {

@@ -52,7 +52,6 @@ export const HeroSection: FC<HeroSectionProps> = ({
         h-[500px] md:h-[600px] xl:h-[724px]
         pt-[58px] md:pt-[88px]
         px-4 md:px-[42px]
-            overflow-x-hidden
       "
       style={{ borderRadius: "30px 30px 0px 0px" }}
     >

@@ -22,13 +22,22 @@ export const StationsGroup: React.FC<Props> = ({
 
   return (
     <div className="mb-2">
-      <button onClick={() => toggleSection(line)} className="flex justify-between items-center text-[#3D464D] w-full  text-lg font-semibold pt-4 pl-4">
+<button
+  onClick={() => toggleSection(line)}
+  className="flex justify-between items-start text-left text-[#3D464D] w-full text-lg font-semibold pt-4 pl-4"
+>
+
         <span>{line}</span>
         <img src={openSections[line] ? ChevronDownIcon : ChevronRightIcon} className="w-6 h-6" alt="" />
       </button>
 
       {openSections[line] && (
-        <div className="grid grid-cols-2 gap-x-2 gap-y-4 pl-4 pt-4 " >
+        <div
+  className="grid gap-x-2 gap-y-4 pl-4 pt-4"
+  style={{
+    gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+  }}
+>
           {visible
             .filter(s => s.toLowerCase().includes(searchTerm.toLowerCase()))
             .map(station => (
@@ -40,7 +49,7 @@ export const StationsGroup: React.FC<Props> = ({
               />
             ))}
           {!showAll && hidden > 0 && (
-            <button onClick={() => setShowAll(true)} className="font-heading font-medium text-sm underline text-left col-span-2">
+            <button onClick={() => setShowAll(true)} className="font-heading font-medium text-sm underline text-left col-span-full">
               + {hidden} more
             </button>
           )}

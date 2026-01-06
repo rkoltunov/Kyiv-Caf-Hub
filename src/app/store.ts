@@ -10,6 +10,10 @@ type Store = {
   setToken: (token: string | null) => void;
   logout: () => void;
 
+  // 🟣 Новое — флаг режима админки
+  isAdminMode: boolean;
+  setAdminMode: (value: boolean) => void;
+
   walkingTimes: Record<string, string>;
   setWalkingTime: (cafeId: string, time: string) => void;
 };
@@ -33,6 +37,10 @@ export const useStore = create<Store>((set) => ({
     localStorage.removeItem("token");
     set({ token: null });
   },
+
+  // 🟣 Новое
+  isAdminMode: false,
+  setAdminMode: (value) => set({ isAdminMode: value }),
 
   walkingTimes: {},
   setWalkingTime: (cafeId, time) =>

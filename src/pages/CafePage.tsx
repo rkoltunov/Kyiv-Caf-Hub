@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-//import { getCafeById } from "../api/cafe";
 import { getCafeById } from "../api/cafeSafe";
 import type { CafeResponseDto } from "../types/dto";
 import { metroStationsMock } from "../mocks/metroStationsMock";
@@ -14,16 +13,27 @@ import ShareIcon from "../assets/icons/share.svg";
 import InstagramIcon from "../assets/icons/instagram.svg";
 
 export default function CafePage() {
+  // -----------------------------
+  // 🔹 Хуки — только вверху компонента
+  // -----------------------------
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { walkingTimes, setWalkingTime } = useStore();
 
   const [cafe, setCafe] = useState<CafeResponseDto | null>(null);
   const [loading, setLoading] = useState(true);
+  const [timeOnFoot, setTimeOnFoot] = useState(""); // ✅ теперь всегда вызывается
 
-  // ✅ Извлекаем ID из URL `/cafe/12-sereda-vegan-point`
-  const id = Number(slug?.split("-")[0]);
+  // -----------------------------
+  // 🔹 Получаем ID из slug
+  // -----------------------------
+  const fullSlug = slug ?? "";
+  const id = Number(fullSlug.split("-")[0]);
+  const pureSlug = fullSlug.replace(/^\d+-/, "");
 
+  // -----------------------------
+  // 🔹 Загружаем кафе (из API или моков)
+  // -----------------------------
   useEffect(() => {
     if (!id) return;
 
@@ -34,8 +44,7 @@ export default function CafePage() {
       } catch (err: any) {
         console.warn(`⚠️ Кафе с id=${id} не найдено на бэке, ищем в моках...`);
 
-        // 💾 fallback: ищем кафе в mock-файле
-        const mock = mockCafes.find((c) => c.id === id || c.id === (id - 8));
+        const mock = mockCafes.find((c) => c.slug === pureSlug || c.id === id);
         if (mock) {
           console.log(`✅ Найдено мок-кафе: ${mock.name}`);
           setCafe(mock as CafeResponseDto);
@@ -50,41 +59,49 @@ export default function CafePage() {
     };
 
     loadCafe();
-  }, [id, navigate]);
+  }, [slug, id, navigate]);
 
+  // -----------------------------
+  // 🔹 Вычисляем walking time (только после загрузки кафе)
+  // -----------------------------
+  useEffect(() => {
+    if (!cafe) return;
+
+    const metro = cafe.tags.find((t) => t.category === "METRO")?.name;
+    if (!metro) return;
+
+    const metroCoords = metroStationsMock[metro as keyof typeof metroStationsMock];
+    if (!metroCoords) return;
+
+    const cached = walkingTimes[cafe.slug];
+    if (cached) {
+      setTimeOnFoot(cached);
+      return;
+    }
+
+    const calculated = getWalkingTime(
+      { lat: cafe.latitude, lon: cafe.longitude },
+      metroCoords
+    );
+
+    setTimeOnFoot(calculated);
+    setWalkingTime(cafe.slug, calculated);
+  }, [cafe, walkingTimes, setWalkingTime]);
+
+  // -----------------------------
+  // 🔹 Рендер
+  // -----------------------------
+  console.log("CAFÉ STATE =", cafe);
+console.log("TAGS =", cafe?.tags);
+  console.log("TYPE =", typeof cafe);
+  
   if (loading)
     return <div className="p-10 text-center text-gray-600">Loading...</div>;
   if (!cafe) return null;
 
-  // ===============================
-  // 📸 Изображения
-  // ===============================
   const photos = cafe.images?.map((img) => img.imageUrl) || [];
 
-  // ===============================
-  // 🚇 Метро и время пешком
-  // ===============================
   const metro = cafe.tags.find((t) => t.category === "METRO")?.name || "";
-  const metroCoords = metroStationsMock[metro as keyof typeof metroStationsMock];
-
-  let timeOnFoot = "";
-  if (metro && metroCoords) {
-    const cached = walkingTimes[cafe.slug];
-    if (cached) {
-      timeOnFoot = cached;
-    } else {
-      const calculated = getWalkingTime(
-        { lat: cafe.latitude, lon: cafe.longitude },
-        metroCoords
-      );
-      timeOnFoot = calculated;
-      setWalkingTime(cafe.slug, calculated);
-    }
-  }
-
-  // ===============================
-  // 🏷️ Теги
-  // ===============================
   const servingTags = cafe.tags
     .filter((t) => t.category === "MENU")
     .map((t) => t.name);
@@ -93,9 +110,9 @@ export default function CafePage() {
     .map((t) => t.name);
   const budget = cafe.tags.find((t) => t.category === "BUDGET")?.name || "";
 
-  // ===============================
+  // -----------------------------
   // 💅 Разметка страницы
-  // ===============================
+  // -----------------------------
   return (
     <section className="bg-[#F9F8F5] rounded-[30px] w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-[42px] xl:px-[42px] py-8 md:py-[58px] transition-all duration-300">
       {/* Breadcrumbs */}
@@ -165,14 +182,12 @@ export default function CafePage() {
           className="w-full lg:w-2/3 h-auto lg:h-[420px] flex flex-col sm:flex-row gap-2 p-4 lg:p-6"
           style={{ borderRadius: "30px 30px 30px 30px" }}
         >
-          {/* Левая большая */}
           <div className="flex-1 bg-gray-100 overflow-hidden" style={{ borderRadius: "30px 0px 0px 30px" }}>
             {photos[0] && (
               <img src={photos[0]} alt={cafe.name} className="w-full h-full object-cover" loading="lazy" />
             )}
           </div>
 
-          {/* Средняя колонка */}
           <div className="flex-1 flex flex-col gap-2">
             {[photos[1], photos[2]].map(
               (url, i) =>
@@ -184,7 +199,6 @@ export default function CafePage() {
             )}
           </div>
 
-          {/* Правая узкая */}
           <div className="flex-1 bg-gray-100 overflow-hidden" style={{ borderRadius: "0px 30px 30px 0px" }}>
             {photos[3] && (
               <img src={photos[3]} alt={cafe.name} className="w-full h-full object-cover" loading="lazy" />
@@ -202,7 +216,6 @@ export default function CafePage() {
           <p className="mb-[65px] ">{cafe.description}</p>
         </div>
 
-        {/* Tags */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {metro && (
             <div className="border border-[#A8B1B8] rounded-[16px] p-4">
@@ -262,4 +275,3 @@ export default function CafePage() {
     </section>
   );
 }
-

@@ -63,7 +63,16 @@ export const InstagramSection: FC = () => {
         Show us your #BestCoffeeMoment by tagging us @Kyivcafehub for a chance to be featured!
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center max-w-[1440px] mx-auto">
+      <div className="
+  grid 
+  grid-cols-2           /* mobile → 2 карточки */
+  sm:grid-cols-2        /* tablet → 2 карточки */
+  xl:grid-cols-4        /* desktop ≥1280 → 4 карточки */
+  gap-6 
+  justify-items-center 
+  max-w-[1440px] 
+  mx-auto
+">
         {instagramItems.map((item) => (
           <InstagramCard key={item.id} item={item} />
         ))}

@@ -2,8 +2,8 @@ import { CafeCard } from "../../components/ui/CafeCard";
 import ShowMoreIcon from "../../assets/icons/add-filled-circle.svg";
 
 interface Cafe {
-  id: number;        // фильтрация по id
-  slug: string;     // переход по slug
+  id: number;
+  slug: string;
   title: string;
   description: string;
   image: string;
@@ -23,37 +23,53 @@ export default function CafesGrid({
 }: CafesGridProps) {
   return (
     <>
-      {/* Кол-во результатов */}
+      {/* Количество результатов */}
       <div className="text-gray-600 px-4 sm:px-8 lg:px-[42px] font-medium mb-6 text-left">
         {filteredItems.length} results
       </div>
 
-      {/* Сетка карточек */}
-      <div className="flex justify-center px-4 sm:px-8 lg:px-[42px]">
+      {/* Адаптивная сетка */}
+      <div className="px-4 sm:px-8 lg:px-[42px]">
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-4 justify-items-center w-full max-w-[1440px]"
+          className="
+            w-full max-w-[1440px] mx-auto
+            grid
+            gap-x-6 gap-y-8
+            justify-center                /* центрируем сетку */
+            
+            grid-cols-1                   /* мобильные */
+            sm:grid-cols-2                /* планшеты и большие телефоны */
+            lg:grid-cols-3                /* маленькие ноутбуки */
+            xl:grid-cols-4                /* десктоп */
+          "
         >
-          {visibleItems.map(({ id, slug, title, description, image, metro }) => (
+          {visibleItems.map((cafe) => (
             <CafeCard
-              key={id}
-              id={id}            // для фильтрации
-              slug={slug}        // для перехода по ссылке
-              title={title}
-              description={description}
-              image={image}
-              metro={metro}
-              className="w-full max-w-[300px] sm:max-w-[320px]"
+              key={cafe.id}
+              id={cafe.id}
+              slug={cafe.slug}
+              title={cafe.title}
+              description={cafe.description}
+              image={cafe.image}
+              metro={cafe.metro}
+              // Никаких max-w здесь больше не нужно!
             />
           ))}
         </div>
       </div>
 
-      {/* Кнопка "Show more" */}
+      {/* Кнопка Show more */}
       {visibleItems.length < filteredItems.length && (
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-center mt-12">
           <button
             onClick={onShowMore}
-            className="flex items-center gap-2 px-4 py-2 font-medium font-heading text-black hover:text-gray-700 transition-colors"
+            className="
+              flex items-center gap-3 px-6 py-3
+              font-heading font-medium text-black
+               border-black rounded-full
+              hover:bg-black hover:text-white
+              active:scale-95 transition-transform
+            "
           >
             Show more
             <img src={ShowMoreIcon} alt="" className="w-6 h-6" />
